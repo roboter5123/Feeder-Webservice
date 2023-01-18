@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Abschlussprojekt.iml" filepath="$PROJECT_DIR$/.idea/Abschlussprojekt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server/java/feeder.iml" filepath="$PROJECT_DIR$/server/java/feeder.iml" />
+    </modules>
+  </component>
+</project>

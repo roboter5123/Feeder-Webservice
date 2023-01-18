@@ -1,0 +1,90 @@
+/*############################Dashboard###########################*/
+
+
+.feeder, .schedule{
+
+    font-size: 1rem;
+    margin: 5px;
+    outline: var(--tertiary) 2px solid;
+    padding: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text);
+}
+
+.add{
+    display: inline-block;
+    width: 100%;
+    margin: 5px 5px 5px auto;
+    text-align: right;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.tile ul{
+
+    padding: 5px;
+    margin: 5px;
+    height: 28vh;
+    overflow-y:auto;
+    overflow-x: hidden;
+}
+
+.tile ul li{
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.tile ul li i{
+
+    padding: 5px;
+    cursor: pointer;
+}
+
+i{
+
+    opacity: 1;
+}
+
+.fullScreen{
+
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(25, 25, 25, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popUp{
+
+    background-color: var(--primary);
+    color: var(--text);
+    padding: 5px;
+}
+
+.popUp div{
+
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#popUpHeading i{
+
+    cursor: pointer;
+}
+
+#popUpHeadline{
+
+    display: inline-block;
+    flex-grow: 1;
+    text-align: center;
+    text-transform: capitalize;
+}

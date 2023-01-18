@@ -1,0 +1,33 @@
+.tile ul{
+
+    padding: 5px;
+    margin: 5px;
+    height: 125px;
+    overflow-y:auto;
+    overflow-x: hidden;
+}
+
+input[type="number"]{
+
+    width: 50px;
+}
+
+#dispenseHistory ul{
+
+    padding-left:30px;
+}
+
+.screenHeading span{
+    display: none;
+}
+
+.screenHeading h3{
+
+    display: inline-block;
+}
+
+.screenHeading span.active{
+
+    display: inline;
+    cursor: pointer;
+}

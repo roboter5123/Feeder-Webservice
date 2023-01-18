@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link th:href="@{/css/feeder.css}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<p id = logout class="navigation">Logout</p>
+<a id = "gotoDashboard" class ="navigation" href="/dashboard">Back</a>
+<main>
+    <div id="screen">
+        <div class="screen active" id="mainScreen">
+            <div th:id="${feeder.uuid}" class="screenHeading">
+                <h2>Feeder</h2>
+                <div>
+                    <h3 th:text="${feeder.name}?: ${feeder.uuid}" id = "name" >
+                    </h3>
+                    <i class="fa-solid fa-pen-to-square active" id="editName"></i>
+                    <i class="fa-regular fa-square-check" id ="saveName"></i><i class="fa-regular fa-rectangle-xmark" id = "cancelName"></i>
+                </div>
+
+            </div>
+            <div class="screenMain">
+                <div>
+                    <div id="directDispense" class="tile">
+                        <h2>Dispense directly</h2>
+                        <div class="row">
+                            <label>Feed amount:</label><input type="number" id="amount" max="999" min="0"> <input
+                                type="button"
+                                value="Dispense" id="dispenseButton">
+                        </div>
+
+                    </div>
+                    <div id="schedules" class="tile">
+                        <h2>Change Schedule</h2>
+                        <div class="row">
+                            <label>Current Schedule:</label>
+                            <select name="schedules" id="scheduleSelect">
+                                <option th:each="schedule: ${schedules}" th:value="${schedule.name}"
+                                        th:text="${schedule.name}" th:selected="${schedule.scheduleId == feeder.schedule.scheduleId}"></option>
+                            </select>
+
+                            <input type="button" value="Change" id ="changeSchedule">
+                        </div>
+                    </div>
+                </div>
+                <div id="dispenseHistory" class="tile">
+                    <h2>Dispensation History</h2>
+                    <ul>
+                        <li th:each="dispensation: ${feeder.dispensations}">
+                            <span th:text="${dispensation.time.toLocalDate()}"></span>
+                            <span th:text="${dispensation.time.toLocalTime().format(timeFormatter)}"></span>
+                            <span th:text="${dispensation.amount} + g"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script crossorigin="anonymous" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+        src="https://code.jquery.com/jquery-3.6.3.js"></script>
+<script th:src="@{/js/lib.js}" type="text/javascript"></script>
+<script th:src="@{/js/feeder.js}" type="text/javascript"></script>
+</body>
+</html>
