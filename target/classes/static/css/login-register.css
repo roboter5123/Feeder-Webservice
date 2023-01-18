@@ -1,0 +1,28 @@
+/*############################LOGIN/register############################*/
+#loginScreen, #registerScreen {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#login, #register {
+
+    background-color: var(--primary);
+    padding: 0 10px 10px;
+}
+
+#login h2 {
+
+    text-align: center;
+}
+
+#email, #password, input[type = "submit"] {
+
+    display: block;
+    margin: 3px;}
+
+a[href="/register"] {
+
+    color: var(--text);
+}
