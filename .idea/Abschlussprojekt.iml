@@ -13,7 +13,6 @@
         <datasource-mapping>
           <factory-entry name="entityManagerFactory" />
         </datasource-mapping>
-        <datasource-mapping />
         <naming-strategy-map />
       </configuration>
     </facet>
@@ -31,23 +30,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.hibernate.orm:hibernate-core:6.1.6.Final" level="project" />
-    <orderEntry type="library" name="Maven: jakarta.persistence:jakarta.persistence-api:3.1.0" level="project" />
-    <orderEntry type="library" name="Maven: jakarta.transaction:jakarta.transaction-api:2.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.5.0.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.hibernate.common:hibernate-commons-annotations:6.0.2.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss:jandex:2.4.2.Final" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml:classmate:1.5.1" level="project" />
-    <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.12.20" level="project" />
-    <orderEntry type="library" name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:4.0.0" level="project" />
-    <orderEntry type="library" name="Maven: jakarta.activation:jakarta.activation-api:2.1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.jaxb:jaxb-runtime:4.0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.jaxb:jaxb-core:4.0.1" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.angus:angus-activation:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.jaxb:txw2:4.0.1" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.istack:istack-commons-runtime:4.1.1" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: jakarta.inject:jakarta.inject-api:2.0.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.antlr:antlr4-runtime:4.10.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:3.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:3.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:3.0.1" level="project" />
@@ -79,6 +61,23 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:6.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:6.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:6.0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate.orm:hibernate-core:6.1.6.Final" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.persistence:jakarta.persistence-api:3.1.0" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.transaction:jakarta.transaction-api:2.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.5.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate.common:hibernate-commons-annotations:6.0.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss:jandex:2.4.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml:classmate:1.5.1" level="project" />
+    <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.12.20" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:4.0.0" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.activation:jakarta.activation-api:2.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.jaxb:jaxb-runtime:4.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.jaxb:jaxb-core:4.0.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.angus:angus-activation:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.jaxb:txw2:4.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.istack:istack-commons-runtime:4.1.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: jakarta.inject:jakarta.inject-api:2.0.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.antlr:antlr4-runtime:4.10.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-thymeleaf:3.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.thymeleaf:thymeleaf-spring6:3.1.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.thymeleaf:thymeleaf:3.1.1.RELEASE" level="project" />
@@ -133,5 +132,8 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:6.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aspects:6.0.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.persistence:javax.persistence-api:2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5" level="project" />
+    <orderEntry type="library" name="Maven: com.github.ulisesbocchio:jasypt-spring-boot:3.0.5" level="project" />
+    <orderEntry type="library" name="Maven: org.jasypt:jasypt:1.9.3" level="project" />
   </component>
 </module>
