@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Abschlussprojekt.iml" filepath="$PROJECT_DIR$/.idea/Abschlussprojekt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server/java/feeder.iml" filepath="$PROJECT_DIR$/server/java/feeder.iml" />
     </modules>
   </component>
 </project>
