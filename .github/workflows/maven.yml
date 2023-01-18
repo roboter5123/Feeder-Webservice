@@ -28,7 +28,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B clean package -Djasypt.encryptor.password=${{ secrets.ENCRYPTION_PASSWORD }} --file pom.xml
 
     - name: Build & push Docker image
       uses: mr-smithers-excellent/docker-build-push@v5
