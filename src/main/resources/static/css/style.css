@@ -1,0 +1,161 @@
+:root {
+
+    --primary: #415a77;
+    --secondary: #0d1b2a;
+    --tertiary: #778da9;
+    --text: #e0e1dd;
+
+}
+
+body {
+
+    margin: 0;
+    height: 100vh;
+    background-color: var(--secondary);
+    color: var(--text);
+
+}
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+.flex-box {
+
+    display: flex;
+}
+
+img {
+
+    max-width: 100%;
+    max-height: 100%;
+
+}
+
+.navigation{
+
+    position: fixed;
+    cursor: pointer;
+    background-color: var(--primary);
+    padding: 0.5rem;
+    width: 70px;
+    text-align: center;
+}
+#logout {
+
+    right: 10px;
+    top: 0;
+}
+
+#gotoDashboard{
+
+    left: 10px;
+    top: 0;
+    margin: 16px;
+    color: var(--text);
+    text-decoration: none;
+}
+
+a{
+    display: inline-block;
+    width: 100%;
+    text-align: start;
+}
+/*############################Screen############################*/
+
+#screen {
+
+    flex-grow: 1;
+    height: 100vh;
+}
+
+.screen {
+
+    display: none;
+}
+
+.screen.active {
+
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+}
+
+.screenHeading {
+
+    width: 100%;
+    text-align: center;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2% 4% 0;
+}
+
+.screenMain {
+
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    padding: 0 4% 4% 4%;
+}
+
+i{
+
+    opacity: 0;
+    cursor: default;
+}
+
+i.active{
+
+    opacity: 1;
+    cursor: pointer;
+}
+
+.screenHeading i{
+
+    display: none;
+    margin: 2px;
+    height: 16px
+}
+
+.screenHeading i.active{
+
+    display: inline;
+}
+
+.tile{
+
+    background-color: var(--primary);
+    margin: 5px;
+    height: fit-content;
+    padding: 5px;
+}
+
+.tile h2{
+
+    padding: 5px;
+    margin: 5px 5px 10px;
+    text-align: center;
+}
+
+.tile div{
+
+    padding: 5px;
+}
+
+.row{
+
+    display: flex;
+    justify-content: space-around;
+}
+
+
+
+
+
+
