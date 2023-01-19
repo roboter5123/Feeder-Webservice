@@ -18,7 +18,7 @@
                     <h2>Feeders</h2>
                     <ul>
                         <li th:each="feeder: ${user.feeders}" th:id="${feeder.uuid}">
-                            <i class="fa-solid fa-trash deleteFeeder"></i>
+                            <i class="fa-solid fa-trash delete"></i>
                             <a th:href="@{'feeder/' + ${feeder.uuid}}" th:text="${feeder.name}?: ${feeder.uuid}"
                                class="feederHeading feeder"></a></li>
                     </ul>
@@ -27,8 +27,8 @@
                 <div class="tile" id="schedule">
                     <h2>Schedules</h2>
                     <ul>
-                        <li th:each="schedule: ${user.schedules}" th:id="${schedule.scheduleId}">
-                            <i class="fa-solid fa-trash deleteFeeder"></i>
+                        <li th:each="schedule: ${user.schedules}" th:id="${schedule.name}">
+                            <i class="fa-solid fa-trash delete"></i>
                             <a
                                     th:href="@{'schedule/' + ${schedule.name}}"
                                     th:text="${schedule.name}?: ${schedule.scheduleId}"
