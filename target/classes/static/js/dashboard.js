@@ -22,6 +22,7 @@ $(document).ready(function () {
         popUpButton.click(() => {
 
             let parameterValue = $("#identity").val()
+
             if (itemClassToAdd === "feeder"){
 
                 fetch("http://localhost:8080/api/feeder?" + new URLSearchParams({"uuid":parameterValue}), {
@@ -37,7 +38,6 @@ $(document).ready(function () {
 
             }else if(itemClassToAdd === "schedule"){
 
-                let parameterValue = $("#identity").val()
                 fetch("http://localhost:8080/api/schedule?" + new URLSearchParams({"name":parameterValue}), {
                     method: 'POST',
                         credentials: "include",
@@ -78,5 +78,38 @@ $(document).ready(function () {
         popUpScreen.addClass("fullScreen")
         popUpScreen.append(popUp)
         $("body").append(popUpScreen)
+    })
+
+    $(".delete").click(function (){
+
+        let itemType = $(this).closest(".tile").attr("id")
+        let itemIdentification = $(this).closest("li").attr("id")
+
+        if (itemType === "feeder") {
+
+            fetch("http://localhost:8080/api/feeder?" + new URLSearchParams({"uuid": itemIdentification}), {
+                method: 'DELETE',
+                credentials: "include",
+            }).then((response) => {
+
+                if (response.ok) {
+
+                    location.reload()
+                }
+            })
+        }else if (itemType ==="schedule"){
+
+            fetch("http://localhost:8080/api/schedule?" + new URLSearchParams({"name": itemIdentification}), {
+                method: 'DELETE',
+                credentials: "include",
+            }).then((response) => {
+
+                if (response.ok) {
+
+                    location.reload()
+                }
+            })
+        }
+
     })
 })
