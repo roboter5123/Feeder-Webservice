@@ -2,12 +2,15 @@ package com.roboter5123.feeder.service.api;
 import com.roboter5123.feeder.controller.DatabaseController;
 import com.roboter5123.feeder.databaseobject.AccessToken;
 import com.roboter5123.feeder.databaseobject.User;
+import com.roboter5123.feeder.exception.BadRequestException;
 import com.roboter5123.feeder.exception.GoneException;
 import com.roboter5123.feeder.exception.InternalErrorException;
 import com.roboter5123.feeder.exception.UnauthorizedException;
+import com.roboter5123.feeder.util.MakeAbstractRequest;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
@@ -27,6 +30,9 @@ public class UserService {
 
         this.databaseController = databaseController;
     }
+
+    @Value("${encrypted.property}")
+    private String abstractAPIKey;
 
     @RequestMapping(value = "/api/access-token", method = RequestMethod.POST)
     @ResponseBody
@@ -129,6 +135,11 @@ public class UserService {
     @RequestMapping(value = "/api/user", method = RequestMethod.POST)
     @ResponseBody
     public void postUser(@RequestBody User user) {
+
+        if(!MakeAbstractRequest.checkEmail(user.getEmail(), abstractAPIKey)){
+
+            throw new BadRequestException();
+        }
 
         if (isEmailRegistered(user)) {
 
