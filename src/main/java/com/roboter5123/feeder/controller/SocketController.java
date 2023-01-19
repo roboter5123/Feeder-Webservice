@@ -1,9 +1,6 @@
 package com.roboter5123.feeder.controller;
-
 import com.roboter5123.feeder.databaseobject.Dispensation;
 import com.roboter5123.feeder.databaseobject.Feeder;
-import com.roboter5123.feeder.databaseobject.Schedule;
-import com.roboter5123.feeder.exception.AcceptedException;
 import com.roboter5123.feeder.exception.GoneException;
 import com.roboter5123.feeder.util.FeederConnection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,32 +104,22 @@ public class SocketController extends Thread {
         }
     }
 
-    public void sendSchedule(UUID uuid, Schedule schedule) {
-
-        try {
-
-            String message = "set#{\"schedule\":" + schedule + "}";
-            sendMessage(uuid, message);
-
-        } catch (IOException | NullPointerException e) {
-
-            throw new AcceptedException();
-        }
-    }
-
-    public String sendMessage(UUID uuid, String message) throws IOException, NullPointerException {
+    public void sendMessage(UUID uuid, String message) throws IOException, NullPointerException {
 
         FeederConnection connection = this.getConnection(uuid);
+
+        if (connection == null){
+
+            return;
+        }
         connection.sendCommand(message);
-        return connection.receiveResponse();
     }
 
-    public String updateFeeder(UUID uuid, Feeder feeder){
+    public void updateFeeder(UUID uuid, Feeder feeder){
 
         String message = "set#" + feeder.toString();
         try {
-
-            return sendMessage(uuid, message);
+            sendMessage(uuid, message);
 
         } catch (IOException e) {
 

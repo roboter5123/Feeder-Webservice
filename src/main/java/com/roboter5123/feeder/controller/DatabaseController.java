@@ -132,8 +132,8 @@ public class DatabaseController {
         return taskDao.findByTaskId(taskId);
     }
 
-    public Schedule findByScheduleId(int i) {
+    public List<User> findUsersByFeeder(Feeder feeder) {
 
-        return scheduleDao.findByScheduleId(i);
+        return userDao.findByFeeders_Uuid(feeder.getUuid());
     }
 }

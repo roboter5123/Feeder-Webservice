@@ -125,4 +125,9 @@ public class User implements Serializable {
                 ", feeders=" + feeders +
                 '}';
     }
+
+    public void removeFeeder(Feeder feeder) {
+
+        feeders.remove(feeder);
+    }
 }
