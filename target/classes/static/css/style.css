@@ -58,8 +58,8 @@ img {
     text-decoration: none;
 }
 
-a:not(#cookieNotice > a){
-    
+a:not(#cookieNotice > a, body > a){
+
     display: inline-block;
     width: 100%;
     text-align: start;

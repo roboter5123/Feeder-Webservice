@@ -146,7 +146,7 @@
      */
     function testCookie() {
         document.cookie = 'testCookie=1';
-        return document.cookie.indexOf('testCookie') != -1;
+        return document.cookie.indexOf('testCookie') !== -1;
     }
 
     /**
@@ -154,7 +154,7 @@
      * @returns {boolean}
      */
     function getNoticeCookie() {
-        return document.cookie.indexOf('cookie_notice') != -1;
+        return document.cookie.indexOf('cookie_notice') !== -1;
     }
 
     /**
