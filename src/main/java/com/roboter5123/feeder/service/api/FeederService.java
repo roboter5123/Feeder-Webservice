@@ -118,7 +118,14 @@ public class FeederService {
             throw new GoneException();
         }
 
-        databaseController.delete(feeder);
+        user.removeFeeder(feeder);
+        databaseController.save(user);
+
+        if (databaseController.findUsersByFeeder(feeder) == null){
+
+            databaseController.delete(feeder);
+        }
+
         socketController.updateFeeder(feeder.getUuid(), feeder);
     }
 

@@ -35,6 +35,11 @@ public class ScheduleService {
         User user = databaseController.findByAccessToken(accessToken);
         name = name.strip();
 
+        if (Objects.equals(name, "")){
+
+            throw new BadRequestException();
+        }
+
         if (user == null) {
 
             throw new UnauthorizedException();
