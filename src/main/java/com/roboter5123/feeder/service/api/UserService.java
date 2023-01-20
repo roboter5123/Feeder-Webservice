@@ -1,4 +1,5 @@
 package com.roboter5123.feeder.service.api;
+
 import com.roboter5123.feeder.controller.DatabaseController;
 import com.roboter5123.feeder.databaseobject.AccessToken;
 import com.roboter5123.feeder.databaseobject.User;
@@ -6,6 +7,7 @@ import com.roboter5123.feeder.exception.BadRequestException;
 import com.roboter5123.feeder.exception.GoneException;
 import com.roboter5123.feeder.exception.InternalErrorException;
 import com.roboter5123.feeder.exception.UnauthorizedException;
+import com.roboter5123.feeder.util.EmailSender;
 import com.roboter5123.feeder.util.MakeAbstractRequest;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,11 +26,13 @@ import java.util.Base64;
 public class UserService {
 
     private final DatabaseController databaseController;
+    private final EmailSender emailSender;
 
     @Autowired
-    public UserService(DatabaseController databaseController) {
+    public UserService(DatabaseController databaseController, EmailSender emailSender) {
 
         this.databaseController = databaseController;
+        this.emailSender = emailSender;
     }
 
     @Value("${encrypted.property}")
@@ -46,6 +50,11 @@ public class UserService {
         }
 
         user.setSalt(databaseUser.getSalt());
+
+        if (!databaseUser.getActivated()) {
+
+            throw new UnauthorizedException();
+        }
 
         try {
 
@@ -131,12 +140,11 @@ public class UserService {
         response.addCookie(cookie);
     }
 
-
     @RequestMapping(value = "/api/user", method = RequestMethod.POST)
     @ResponseBody
     public void postUser(@RequestBody User user) {
 
-        if(!MakeAbstractRequest.checkEmail(user.getEmail(), abstractAPIKey)){
+        if (!MakeAbstractRequest.checkEmail(user.getEmail(), abstractAPIKey)) {
 
             throw new BadRequestException();
         }
@@ -158,6 +166,11 @@ public class UserService {
             throw new InternalErrorException();
         }
 
+        user.setAcivated(false);
+        AccessToken accessToken = generateAccessToken();
+        emailSender.verificationMail(user, accessToken);
+        databaseController.save(accessToken);
+        user.setAccessToken(accessToken);
         databaseController.save(user);
     }
 
@@ -183,4 +196,13 @@ public class UserService {
         return databaseController.findByEmail(user.getEmail()) != null;
     }
 
+    @RequestMapping(value = "/api/user/verify", method = RequestMethod.PUT)
+    @ResponseBody
+    private User verifyUser(@RequestParam AccessToken token) {
+
+        User user = databaseController.findByAccessToken(token);
+        user.setAcivated(true);
+        databaseController.save(user);
+        return user;
+    }
 }

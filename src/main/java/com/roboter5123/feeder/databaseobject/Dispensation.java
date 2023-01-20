@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "dispensation")
-public class Dispensation implements Serializable, Comparable {
+public class Dispensation implements Serializable, Comparable<Dispensation> {
 
     @Id
     @GeneratedValue
@@ -48,19 +48,19 @@ public class Dispensation implements Serializable, Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(Dispensation o) {
 
-        Dispensation dispensation = (Dispensation) o;
+        if (this.time.isBefore(o.getTime())) {
 
-        if (this.time.isBefore(dispensation.getTime())){
+            return -1;
 
-            return 1;
-        } else if (this.time.isEqual(dispensation.getTime())) {
+        } else if (this.time.isEqual(o.getTime())) {
 
             return 0;
-        }else{
+        } else {
 
-            return +1;
+            return -1;
         }
     }
 }
+
