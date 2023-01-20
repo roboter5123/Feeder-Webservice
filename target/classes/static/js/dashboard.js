@@ -25,7 +25,7 @@ $(document).ready(function () {
 
             if (itemClassToAdd === "feeder"){
 
-                fetch("http://localhost:8080/api/feeder?" + new URLSearchParams({"uuid":parameterValue}), {
+                fetch("/api/feeder?" + new URLSearchParams({"uuid":parameterValue}), {
                     method: 'POST',
                     credentials: "include",
                 }).then((response) => {
