@@ -8,7 +8,7 @@ $(document).ready(function () {
         let password = $("#password").val()
         let data = {"email": email, "password": password}
 
-        fetch("http://localhost:8080/api/user", {
+        fetch("/api/user", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
