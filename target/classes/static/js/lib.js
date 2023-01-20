@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     $("#logout").click(function () {
 
-        fetch("http://localhost:8080/api/access-token", {
+        fetch("/api/access-token", {
             method: 'DELETE',
             credentials: "include",
         }).then((response) => {
