@@ -43,7 +43,7 @@ img {
     width: 70px;
     text-align: center;
 }
-#logout {
+#logout{
 
     right: 10px;
     top: 0;
@@ -58,11 +58,16 @@ img {
     text-decoration: none;
 }
 
-a:not(#cookieNotice > a){
-    
+a:not(#cookieNotice > a, body > a, #login){
+
     display: inline-block;
     width: 100%;
     text-align: start;
+}
+
+#login{
+    color: var(--text);
+    position: relative;
 }
 /*############################Screen############################*/
 

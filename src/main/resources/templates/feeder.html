@@ -40,7 +40,7 @@
                             <label>Current Schedule:</label>
                             <select name="schedules" id="scheduleSelect">
                                 <option th:each="schedule: ${schedules}" th:value="${schedule.name}"
-                                        th:text="${schedule.name}" th:selected="${schedule.scheduleId == feeder.schedule.scheduleId}"></option>
+                                        th:text="${schedule.name}" th:selected="${schedule.scheduleId == currentSchedule.scheduleId}"></option>
                             </select>
 
                             <input type="button" value="Change" id ="changeSchedule">

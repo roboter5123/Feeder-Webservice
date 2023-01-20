@@ -1,4 +1,5 @@
 package com.roboter5123.feeder.databaseobject;
+
 import com.roboter5123.feeder.exception.GoneException;
 import jakarta.persistence.*;
 
@@ -14,11 +15,11 @@ public class User implements Serializable {
 
     @Id
     private String email;
+    private boolean activated;
     private String password;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "access_token_token")
     private AccessToken accessToken;
-    private String token;
     private LocalDateTime validthru;
     private byte[] salt;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -119,7 +120,6 @@ public class User implements Serializable {
         return "User{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", token='" + token + '\'' +
                 ", validthru=" + validthru +
                 ", salt='" + Arrays.toString(salt) + '\'' +
                 ", feeders=" + feeders +
@@ -129,5 +129,15 @@ public class User implements Serializable {
     public void removeFeeder(Feeder feeder) {
 
         feeders.remove(feeder);
+    }
+
+    public void setAcivated(boolean b) {
+
+        this.activated = b;
+    }
+
+    public boolean getActivated() {
+
+        return activated;
     }
 }

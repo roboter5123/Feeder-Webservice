@@ -2,7 +2,6 @@ package com.roboter5123.feeder.service;
 
 import com.roboter5123.feeder.controller.DatabaseController;
 import com.roboter5123.feeder.databaseobject.*;
-import com.roboter5123.feeder.datasource.DispensationRepository;
 import com.roboter5123.feeder.util.Weekday;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,16 +13,12 @@ import java.util.*;
 
 @Controller
 public class FrontendService {
-
     DatabaseController databaseController;
-    private final DispensationRepository dispensationRepository;
 
     @Autowired
-    public FrontendService(DatabaseController databaseController,
-                           DispensationRepository dispensationRepository) {
+    public FrontendService(DatabaseController databaseController) {
 
         this.databaseController = databaseController;
-        this.dispensationRepository = dispensationRepository;
     }
 
     @GetMapping("/")
@@ -73,6 +68,19 @@ public class FrontendService {
             Feeder feeder = databaseController.findByUuid(uuid);
             model.addAttribute(feeder);
             User user = databaseController.findByAccessToken(accessToken);
+            Schedule currentSchedule = feeder.getSchedule();
+
+            if (currentSchedule == null){
+
+                currentSchedule = new Schedule("-----");
+                user.addSchedule(currentSchedule);
+
+            } else if (!user.getSchedules().contains(currentSchedule)) {
+
+                user.addSchedule(currentSchedule);
+            }
+
+            model.addAttribute("currentSchedule", currentSchedule);
             model.addAttribute("schedules", user.getSchedules());
             List<Dispensation> dispensations = feeder.getDispensations();
             Collections.sort(dispensations);
@@ -122,5 +130,25 @@ public class FrontendService {
         }
     }
 
+    @GetMapping("/{token}/verify")
+        public String verifyAccount(@PathVariable String token, Model model) {
 
+        AccessToken accessToken = databaseController.findByToken(token);
+        User user = databaseController.findByAccessToken(accessToken);
+
+        if (user == null || user.getActivated()) {
+
+            return "redirect:/login";
+
+        } else {
+
+            user.setAcivated(true);
+            databaseController.delete(accessToken);
+            databaseController.save(user);
+            model.addAttribute("valid", true);
+            user.setAcivated(true);
+        }
+
+        return "verification";
+    }
 }
