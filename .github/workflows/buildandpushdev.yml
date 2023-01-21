@@ -11,8 +11,6 @@ name: build and deploy dev
 on:
   push:
     branches: [ "development" ]
-  merge:
-    branches: [ "development" ]
 
 jobs:
   build:

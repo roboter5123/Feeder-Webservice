@@ -11,8 +11,6 @@ name: build and deploy master
 on:
   push:
     branches: [ "master" ]
-  merge:
-    branches: [ "master" ]
 
 jobs:
   build:
