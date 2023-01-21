@@ -10,20 +10,23 @@
 </head>
 
 <body>
-<a id = "gotoDashboard" class ="navigation" href="/login">Login</a>
+<a id="gotoDashboard" class="navigation topLeft" href="/login">Login</a>
 
 <main>
 
     <div class="screen active" id="registerScreen">
 
-        <form id="register" method="post">
+        <form id="register" class="tile" method="post">
 
-            <h2>Register</h2>
-            <label for="email"></label><input id="email" name="email" required type="email">
-            <label for="password"></label><input id="password" name="password" required type="password">
-            <div class="flex-box">
-                <input type="submit" value="Register">
+            <h2 class="tileHeading">Register</h2>
+            <div class="tileMain">
+                <label for="email">Email:<input id="email" name="email" required type="email"></label>
+                <label for="password">Password:<input id="password" name="password" required type="password"></label>
+                <div class="flex-box">
+                    <input type="submit" value="Create Account">
+                </div>
             </div>
+
         </form>
 
     </div>
