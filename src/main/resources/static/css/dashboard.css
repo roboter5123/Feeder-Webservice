@@ -1,52 +1,32 @@
-/*############################Dashboard###########################*/
+.tileMain{
 
-
-.feeder, .schedule{
-
-    font-size: 1rem;
-    margin: 5px;
-    outline: var(--tertiary) 2px solid;
-    padding: 10px;
-    cursor: pointer;
-    text-decoration: none;
-    color: var(--text);
-}
-
-.add{
-    display: inline-block;
-    width: 100%;
-    margin: 5px 5px 5px auto;
-    text-align: right;
+    height: 160px;
+    list-style: none;
     padding: 5px;
-    cursor: pointer;
+    overflow-y: auto;
 }
 
-.tile ul{
-
-    padding: 5px;
-    margin: 5px;
-    height: 28vh;
-    min-width: 300px;
-    overflow-y:auto;
-    overflow-x: hidden;
-}
-
-.tile ul li{
-
+li{
     display: flex;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: space-evenly;
+    padding: 0 0 0 10px;
+    outline: 2px solid var(--text);
+    margin: 5px 0;
+    width: 100%;
 }
 
-.tile ul li i{
+li a{
 
-    padding: 5px;
-    cursor: pointer;
+    flex-grow: 1;
+    text-decoration: none;
+    padding: 15px 15px 15px 5px;
+    width: 100%;
 }
 
-i{
+.tileFooter{
 
-    opacity: 1;
+    justify-content: right;
 }
 
 .fullScreen{
@@ -67,6 +47,7 @@ i{
     background-color: var(--primary);
     color: var(--text);
     padding: 5px;
+    outline: 2px solid var(--text) ;
 }
 
 .popUp div{

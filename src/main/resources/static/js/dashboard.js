@@ -6,7 +6,7 @@ $(document).ready(function () {
         let popUpHeadline = $("<h3 id='popUpHeadline'></h3>")
         popUpHeadline.text("Add "+itemClassToAdd)
 
-        let closePopUp = $("<i class=\"fa-solid fa-x\"></i>")
+        let closePopUp = $("<i class=\"fa-solid fa-x active\"></i>")
         closePopUp.click(function (){
 
             $('.fullScreen').remove();

@@ -8,24 +8,22 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-<p id = logout class ="navigation">Logout</p>
-<a id = "gotoDashboard" class ="navigation" href="/dashboard">Back</a>
-<main id="screen">
+<p id = logout class ="navigation topRight">Logout</p>
+<a id = "gotoDashboard" class ="navigation topLeft" href="/dashboard">Back</a>
+<main>
     <div class="screen active" id="mainScreen">
-        <div class="screenHeading"><h2>Schedule</h2>
-            <div>
-                <h3 th:text="${schedule.name}?: ${schedule.scheduleId}" id="name">
-                </h3>
+        <div class="screenHeading">
+            <h2>Schedule</h2>
+            <div class="entityName">
+                <h3 th:text="${schedule.name}?: ${schedule.scheduleId}" id="name"></h3>
               <i class="fa-solid fa-pen-to-square active" id="editName"></i>
                <i class="fa-regular fa-square-check" id ="saveName"></i><i class="fa-regular fa-rectangle-xmark" id = "cancelName"></i>
             </div>
         </div>
         <div class="screenMain">
-            <div id="calender">
-
-                <div class="weekday" th:each="day:${days.entrySet()}" th:id="${day.key}">
-                    <h2 th:text="${day.key.substring(0,1).toUpperCase()} + ${day.key.substring(1).toLowerCase()}"></h2>
-                    <ul class="dayTasks">
+                <div class="tile" th:each="day:${days.entrySet()}" th:id="${day.key}">
+                    <h2 class="tileHeading" th:text="${day.key.substring(0,1).toUpperCase()} + ${day.key.substring(1).toLowerCase()}"></h2>
+                    <ul class="dayTasks tileMain">
 
                         <li th:each="task: ${day.value}" th:id="${task.taskId}" class="task">
                             <i class="fa-solid fa-trash active deleteTask"></i>
@@ -35,8 +33,10 @@
                             <i class="fa-solid fa-x taskControl"></i>
                         </li>
                     </ul>
-                    <i class="fa-solid fa-plus addTask active"></i>
-                </div>
+                    <div class="tileFooter">
+                        <i class="fa-solid fa-plus addTask active"></i>
+                    </div>
+
             </div>
         </div>
     </div>

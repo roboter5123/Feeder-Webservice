@@ -8,40 +8,44 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-<p id=logout class="navigation">Logout</p>
+
+<p id="logout" class="navigation topRight">Logout</p>
+
 <main>
-    <div id="screen">
         <div class="screen active" id="mainScreen">
-            <div class="screenHeading"><h2>Dashboard</h2></div>
+            <div class="screenHeading">
+                <h2>Dashboard</h2>
+            </div>
             <div class="screenMain">
                 <div class="tile" id="feeder">
-                    <h2>Feeders</h2>
-                    <ul>
+                    <h2 class="tileHeading">Feeders</h2>
+                    <ul class="tileMain">
                         <li th:each="feeder: ${user.feeders}" th:id="${feeder.uuid}">
-                            <i class="fa-solid fa-trash delete"></i>
+                            <i class="fa-solid fa-trash delete active"></i>
                             <a th:href="@{'feeder/' + ${feeder.uuid}}" th:text="${feeder.name}?: ${feeder.uuid}"
                                class="feederHeading feeder"></a></li>
                     </ul>
-                    <i class="fa-solid fa-plus add" id=addFeeder></i>
+                    <div class="tileFooter">
+                        <i class="fa-solid fa-plus add active" id=addFeeder></i>
+                    </div>
                 </div>
-                <div class="tile" id="schedule">
-                    <h2>Schedules</h2>
-                    <ul>
-                        <li th:each="schedule: ${user.schedules}" th:id="${schedule.name}">
-                            <i class="fa-solid fa-trash delete"></i>
-                            <a
-                                    th:href="@{'schedule/' + ${schedule.name}}"
-                                    th:text="${schedule.name}?: ${schedule.scheduleId}"
-                                    class="scheduleHeading schedule">
 
+                <div class="tile" id="schedule">
+                    <h2 class="tileHeading">Schedules</h2>
+                    <ul class="tileMain">
+                        <li th:each="schedule: ${user.schedules}" th:id="${schedule.name}">
+                            <i class="fa-solid fa-trash delete active"></i>
+                            <a th:href="@{'schedule/' + ${schedule.name}}"
+                               th:text="${schedule.name}?: ${schedule.scheduleId}" class="scheduleHeading schedule">
                             </a>
                         </li>
                     </ul>
-                    <i class="fa-solid fa-plus add" id=addSchedule></i>
+                    <div class="tileFooter">
+                        <i class="fa-solid fa-plus add active" id=addSchedule></i>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </main>
 <script crossorigin="anonymous" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
         src="https://code.jquery.com/jquery-3.6.3.js"></script>

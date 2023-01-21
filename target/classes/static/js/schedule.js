@@ -5,7 +5,7 @@ $(document).ready(function () {
         name = $("#name").text();
         let data =
             {
-                "weekday": $(this).closest(".weekday").attr("id"),
+                "weekday": $(this).closest(".tile").attr("id"),
                 "amount": null,
                 "time": null
             }
@@ -68,7 +68,7 @@ $(document).ready(function () {
         let name = $("#name").text();
         let time = $(this).siblings(".time").val();
         let amount = $(this).siblings(".amount").val()
-        let weekday = $(this).closest(".weekday").attr("id")
+        let weekday = $(this).closest(".tile").attr("id")
         let data = {"weekday": weekday, "amount": amount, "time": time}
 
         fetch(`/api/task?${new URLSearchParams({"scheduleName": name})}`, {
