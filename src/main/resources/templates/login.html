@@ -14,18 +14,18 @@
 <main>
 
     <div class="screen active" id="loginScreen">
+        <form id="login" method="post" class="tile">
 
-        <form id="login" method="post">
-
-            <h2>Login</h2>
-            <label for="email"></label><input id="email" name="email" required type="email">
-            <label for="password"></label><input id="password" name="password" required type="password">
-            <div class="flex-box">
-                <input type="submit" value="Login">
-                <a href="/register">Register</a>
+            <h2 class="tileHeading">Login</h2>
+            <div class="tileMain">
+                <label for="email">Email:<input id="email" name="email" required type="email"></label>
+                <label for="password">Password:<input id="password" name="password" required type="password"></label>
+                <a href="/resetPassword">Forgotten Password?</a>
             </div>
-
-
+            <div class="tileFooter">
+                <input type="submit" value="Login">
+                <a href="/register"><input type="button" value="Create Account" id="register"></a>
+            </div>
         </form>
 
     </div>
@@ -36,7 +36,7 @@
         src="https://code.jquery.com/jquery-3.6.3.js"></script>
 <script th:src="@{js/lib.js}" type="text/javascript"></script>
 <script th:src="@{js/login.js}" type="text/javascript"></script>
-<script  th:src="@{/js/cookie.notice.js}" type="text/javascript"></script>
+<script th:src="@{/js/cookie.notice.js}" type="text/javascript"></script>
 </body>
 
 </html>

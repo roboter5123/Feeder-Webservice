@@ -4,7 +4,12 @@
     --secondary: #0d1b2a;
     --tertiary: #778da9;
     --text: #e0e1dd;
+}
 
+* {
+
+    box-sizing: border-box;
+    color: var(--text);
 }
 
 body {
@@ -12,29 +17,15 @@ body {
     margin: 0;
     height: 100vh;
     background-color: var(--secondary);
-    color: var(--text);
-
-}
-
-* {
-
-    box-sizing: border-box;
-
-}
-
-.flex-box {
-
-    display: flex;
 }
 
 img {
 
     max-width: 100%;
     max-height: 100%;
-
 }
 
-.navigation{
+.navigation {
 
     position: fixed;
     cursor: pointer;
@@ -42,39 +33,36 @@ img {
     padding: 0.5rem;
     width: 70px;
     text-align: center;
-}
-#logout{
-
-    right: 10px;
-    top: 0;
-}
-
-#gotoDashboard{
-
-    left: 10px;
-    top: 0;
-    margin: 16px;
-    color: var(--text);
+    margin: 16px 0;
     text-decoration: none;
 }
 
-a:not(#cookieNotice > a, body > a, #login){
+.topRight {
 
-    display: inline-block;
-    width: 100%;
-    text-align: start;
+    right: 10px;
+    top: 10px;
 }
 
-#login{
-    color: var(--text);
-    position: relative;
+.topLeft {
+
+    left: 10px;
+    top: 10px;
 }
-/*############################Screen############################*/
 
-#screen {
+.flex-box {
 
-    flex-grow: 1;
-    height: 100vh;
+    display: flex;
+}
+
+input, select {
+
+    color: black;
+    padding: 5px;
+}
+
+input[type="button"], input[type="submit"] {
+
+    cursor: pointer;
 }
 
 .screen {
@@ -88,6 +76,9 @@ a:not(#cookieNotice > a, body > a, #login){
     height: 100vh;
     width: 100%;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 1;
 }
 
 .screenHeading {
@@ -96,72 +87,82 @@ a:not(#cookieNotice > a, body > a, #login){
     text-align: center;
     justify-content: space-around;
     align-items: center;
-    padding: 2% 4% 0;
+    padding: 2.5% 5%;
+}
+
+.entityName {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+i {
+
+    visibility: hidden;
+    cursor: default;
+}
+
+.entityName i{
+
+    display: none;
+}
+
+.entityName *{
+
+    padding: 5px;
+}
+
+.entityName input{
+
+    min-width: 270px;
+}
+
+.entityName h3{
+
+    margin: 0;
 }
 
 .screenMain {
 
-    width: 100%;
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-grow: 1;
     flex-wrap: wrap;
-    padding: 0 4% 4% 4%;
+    justify-content: center;
+
 }
 
-i{
-
-    opacity: 0;
-    cursor: default;
-}
-
-i.active{
-
-    opacity: 1;
-    cursor: pointer;
-}
-
-.screenHeading i{
-
-    display: none;
-    margin: 2px;
-    height: 16px
-}
-
-.screenHeading i.active{
-
-    display: inline;
-}
-
-.tile{
+.tile {
 
     background-color: var(--primary);
+    min-width: 200px;
     margin: 5px;
-    height: fit-content;
     padding: 5px;
 }
 
-.tile h2{
+.tileHeading {
 
     padding: 5px;
-    margin: 5px 5px 10px;
     text-align: center;
+    margin: 15px 0;
 }
 
-.tile div{
+.tileMain {
 
-    padding: 5px;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.row{
+.tileFooter {
 
     display: flex;
-    justify-content: space-around;
+    padding: 5px;
 }
 
+i.active {
 
-
-
-
-
+    display: inline-block;
+    visibility: visible;
+    cursor: pointer;
+}

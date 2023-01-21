@@ -8,55 +8,54 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-<p id = logout class="navigation">Logout</p>
-<a id = "gotoDashboard" class ="navigation" href="/dashboard">Back</a>
-<main>
-    <div id="screen">
-        <div class="screen active" id="mainScreen">
-            <div th:id="${feeder.uuid}" class="screenHeading">
-                <h2>Feeder</h2>
-                <div>
-                    <h3 th:text="${feeder.name}?: ${feeder.uuid}" id = "name" >
-                    </h3>
-                    <i class="fa-solid fa-pen-to-square active" id="editName"></i>
-                    <i class="fa-regular fa-square-check" id ="saveName"></i><i class="fa-regular fa-rectangle-xmark" id = "cancelName"></i>
-                </div>
+<p id=logout class="navigation topRight">Logout</p>
+<a id="gotoDashboard" class="navigation topLeft" href="/dashboard">Back</a>
 
+<main>
+    <div class="screen active" id="mainScreen">
+        <div th:id="${feeder.uuid}" class="screenHeading">
+            <h2>Feeder</h2>
+            <div class="entityName">
+                <h3 th:text="${feeder.name}?: ${feeder.uuid}" id="name">
+                </h3>
+                <i class="fa-solid fa-pen-to-square active" id="editName"></i>
+                <i class="fa-regular fa-square-check" id="saveName"></i><i class="fa-regular fa-rectangle-xmark"
+                                                                           id="cancelName"></i>
             </div>
-            <div class="screenMain">
-                <div>
-                    <div id="directDispense" class="tile">
-                        <h2>Dispense directly</h2>
-                        <div class="row">
-                            <label>Feed amount:</label><input type="number" id="amount" max="999" min="0"> <input
+        </div>
+        <div class="screenMain">
+            <div>
+                <div id="directDispense" class="tile">
+                    <h2 class="tileHeading">Dispense directly</h2>
+                    <div class="tileMain">
+                        <label>Feed amount:
+                            <input type="number" id="amount" max="999" min="0"> <input
                                 type="button"
                                 value="Dispense" id="dispenseButton">
-                        </div>
-
-                    </div>
-                    <div id="schedules" class="tile">
-                        <h2>Change Schedule</h2>
-                        <div class="row">
-                            <label>Current Schedule:</label>
-                            <select name="schedules" id="scheduleSelect">
-                                <option th:each="schedule: ${schedules}" th:value="${schedule.name}"
-                                        th:text="${schedule.name}" th:selected="${schedule.scheduleId == currentSchedule.scheduleId}"></option>
-                            </select>
-
-                            <input type="button" value="Change" id ="changeSchedule">
-                        </div>
+                        </label>
                     </div>
                 </div>
-                <div id="dispenseHistory" class="tile">
-                    <h2>Dispensation History</h2>
-                    <ul>
-                        <li th:each="dispensation: ${feeder.dispensations}">
-                            <span th:text="${dispensation.time.toLocalDate()}"></span>
-                            <span th:text="${dispensation.time.toLocalTime().format(timeFormatter)}"></span>
-                            <span th:text="${dispensation.amount} + g"></span>
-                        </li>
-                    </ul>
+                <div id="schedules" class="tile">
+                    <h2 class="tileHeading">Change Schedule</h2>
+                    <div class="tileMain">
+                        <label>Current Schedule: <select name="schedules" id="scheduleSelect">
+                            <option th:each="schedule: ${schedules}" th:value="${schedule.name}"
+                                    th:text="${schedule.name}"
+                                    th:selected="${schedule.scheduleId == currentSchedule.scheduleId}"></option>
+                        </select></label>
+                        <input type="button" value="Change Schedule" id="changeSchedule">
+                    </div>
                 </div>
+            </div>
+            <div id="dispenseHistory" class="tile">
+                <h2 class="tileHeading">Dispensation History</h2>
+                <ul class="tileMain">
+                    <li th:each="dispensation: ${feeder.dispensations}">
+                        <span th:text="${dispensation.time.toLocalDate()}"></span>
+                        <span th:text="${dispensation.time.toLocalTime().format(timeFormatter)}"></span>
+                        <span th:text="${dispensation.amount} + g"></span>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

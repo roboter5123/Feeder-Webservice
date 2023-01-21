@@ -6,7 +6,7 @@ $(document).ready(function () {
         let popUpHeadline = $("<h3 id='popUpHeadline'></h3>")
         popUpHeadline.text("Add "+itemClassToAdd)
 
-        let closePopUp = $("<i class=\"fa-solid fa-x\"></i>")
+        let closePopUp = $("<i class=\"fa-solid fa-x active\"></i>")
         closePopUp.click(function (){
 
             $('.fullScreen').remove();
@@ -38,7 +38,7 @@ $(document).ready(function () {
 
             }else if(itemClassToAdd === "schedule"){
 
-                fetch("http://localhost:8080/api/schedule?" + new URLSearchParams({"name":parameterValue}), {
+                fetch("/api/schedule?" + new URLSearchParams({"name":parameterValue}), {
                     method: 'POST',
                         credentials: "include",
                 }).then((response) => {
@@ -87,7 +87,7 @@ $(document).ready(function () {
 
         if (itemType === "feeder") {
 
-            fetch("http://localhost:8080/api/feeder?" + new URLSearchParams({"uuid": itemIdentification}), {
+            fetch("/api/feeder?" + new URLSearchParams({"uuid": itemIdentification}), {
                 method: 'DELETE',
                 credentials: "include",
             }).then((response) => {
@@ -99,7 +99,7 @@ $(document).ready(function () {
             })
         }else if (itemType ==="schedule"){
 
-            fetch("http://localhost:8080/api/schedule?" + new URLSearchParams({"name": itemIdentification}), {
+            fetch("/api/schedule?" + new URLSearchParams({"name": itemIdentification}), {
                 method: 'DELETE',
                 credentials: "include",
             }).then((response) => {
