@@ -9,6 +9,7 @@ import com.roboter5123.feeder.exception.InternalErrorException;
 import com.roboter5123.feeder.exception.UnauthorizedException;
 import com.roboter5123.feeder.util.EmailSender;
 import com.roboter5123.feeder.util.MakeAbstractRequest;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,7 +143,7 @@ public class UserService {
 
     @RequestMapping(value = "/api/user", method = RequestMethod.POST)
     @ResponseBody
-    public void postUser(@RequestBody User user) {
+    public void postUser(@RequestBody User user) throws MessagingException {
 
         if (!MakeAbstractRequest.checkEmail(user.getEmail(), abstractAPIKey)) {
 

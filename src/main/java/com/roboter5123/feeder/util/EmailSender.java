@@ -1,11 +1,12 @@
 package com.roboter5123.feeder.util;
-
 import com.roboter5123.feeder.databaseobject.AccessToken;
 import com.roboter5123.feeder.databaseobject.User;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,14 +23,15 @@ public class EmailSender{
         this.mailSender = mailSender;
     }
 
-    public void verificationMail(User user, AccessToken accessToken){
+    public void verificationMail(User user, AccessToken accessToken) throws MessagingException {
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("automatic.feeder.service@gmail.com");
-        message.setTo(user.getEmail());
-        message.setSubject("Email verification for your feeder account");
-//        TODO: Change url
-        message.setText("Please follow the following link to activate your feeder account:"+ url + "/"+accessToken.getToken()+"/verify");
-        mailSender.send(message);
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        String htmlMsg = "<p>Please click this link to activate your account: <a href=\""+url+"/"+accessToken.getToken()+"/verify\">Link</a></p>";
+        helper.setText(htmlMsg, true);
+        helper.setTo(user.getEmail());
+        helper.setSubject("Activate your automatic feeder account");
+        helper.setFrom("automatic.feeder.service@gmail.com");
+        mailSender.send(mimeMessage);
     }
 }
