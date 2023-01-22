@@ -10,7 +10,6 @@
 </head>
 
 <body>
-<a id="gotoDashboard" class="navigation topLeft" href="/login">Login</a>
 
 <main>
 
@@ -22,10 +21,12 @@
             <div class="tileMain">
                 <label for="email">Email:<input id="email" name="email" required type="email"></label>
                 <label for="password">Password:<input id="password" name="password" required type="password"></label>
-                <div class="flex-box">
-                    <input type="submit" value="Create Account">
-                </div>
             </div>
+            <div class="tileFooter">
+                <input type="submit" value="Create Account">
+                <a href="/login"><input type="button" value="Already got an acount?" id="register"></a>
+            </div>
+
 
         </form>
 
