@@ -4,7 +4,6 @@ import com.roboter5123.feeder.exception.GoneException;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -20,7 +19,6 @@ public class User implements Serializable {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "access_token_token")
     private AccessToken accessToken;
-    private LocalDateTime validthru;
     private byte[] salt;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "email")
@@ -120,7 +118,6 @@ public class User implements Serializable {
         return "User{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", validthru=" + validthru +
                 ", salt='" + Arrays.toString(salt) + '\'' +
                 ", feeders=" + feeders +
                 '}';

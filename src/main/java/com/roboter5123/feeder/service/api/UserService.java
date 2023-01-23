@@ -28,6 +28,9 @@ public class UserService {
 
     private final DatabaseController databaseController;
     private final EmailSender emailSender;
+    @Value("${encrypted.property}")
+    private String abstractAPIKey;
+
 
     @Autowired
     public UserService(DatabaseController databaseController, EmailSender emailSender) {
@@ -35,9 +38,6 @@ public class UserService {
         this.databaseController = databaseController;
         this.emailSender = emailSender;
     }
-
-    @Value("${encrypted.property}")
-    private String abstractAPIKey;
 
     @RequestMapping(value = "/api/access-token", method = RequestMethod.POST)
     @ResponseBody
@@ -102,6 +102,7 @@ public class UserService {
         AccessToken accessToken = new AccessToken();
         accessToken.setToken(base64Encoder.encodeToString(randomBytes));
         accessToken.setExpires(LocalDateTime.now().plusDays(1));
+        databaseController.save(accessToken);
         return accessToken;
     }
 
@@ -199,11 +200,65 @@ public class UserService {
 
     @RequestMapping(value = "/api/user/verify", method = RequestMethod.PUT)
     @ResponseBody
-    private User verifyUser(@RequestParam AccessToken token) {
+    private User verifyUser(@RequestParam AccessToken token) throws MessagingException {
 
         User user = databaseController.findByAccessToken(token);
         user.setAcivated(true);
         databaseController.save(user);
+        databaseController.delete(token);
+        token = generateAccessToken();
+        emailSender.resetMail(user, token);
+        user.setAccessToken(token);
+        databaseController.save(user);
         return user;
     }
-}
+
+    @RequestMapping(value = "/api/user/resetPassword", method = RequestMethod.POST)
+    @ResponseBody
+    private User resetPassword(@RequestBody User user) throws MessagingException {
+
+        user = databaseController.findByEmail(user.getEmail());
+        user.setAcivated(false);
+        AccessToken accessToken = generateAccessToken();
+        user.setAccessToken(accessToken);
+        databaseController.save(user);
+        emailSender.resetMail(user,accessToken);
+        return user;
+    }
+
+    @RequestMapping(value = "/api/user/resetPassword", method = RequestMethod.PUT)
+    @ResponseBody
+    private User resetPassword(@RequestParam AccessToken token, @RequestBody String password) throws NoSuchAlgorithmException {
+
+        User user = databaseController.findByAccessToken(token);
+        password = password.strip();
+
+        if (user == null){
+
+            throw new GoneException();
+        }
+
+        if (password == null || password.equals("")){
+
+            throw new BadRequestException();
+        }
+
+        if (!user.getActivated()){
+
+            throw new UnauthorizedException();
+        }
+
+        byte[] salt = user.getSalt();
+
+        if (salt == null){
+
+            throw new InternalErrorException();
+        }
+
+        password = saltAndHashPassword(password, salt);
+        user.setPassword(password);
+        user.setAcivated(true);
+        databaseController.delete(token);
+        databaseController.save(user);
+        return user;
+    }}

@@ -25,12 +25,25 @@ public class EmailSender{
 
     public void verificationMail(User user, AccessToken accessToken) throws MessagingException {
 
+        String htmlMsg = "<p>Please click this link to activate your account: <a href=\""+url+"/"+accessToken.getToken()+"/verify\">Link</a></p>";
+        String subject = "Activate your automatic feeder account";
+        sendMail(user.getEmail(), htmlMsg, subject);
+    }
+
+    public void resetMail(User user, AccessToken token) throws MessagingException {
+
+        String htmlMsg = "<p>Please click this link to change your password: <a href=\""+url+"/"+token.getToken()+"/resetPassword\">Link</a></p>";
+        String subject = "Reset your feeder account password";
+        sendMail(user.getEmail(), htmlMsg, subject);
+    }
+
+    public void sendMail(String email, String htmlMessage, String subject) throws MessagingException {
+
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-        String htmlMsg = "<p>Please click this link to activate your account: <a href=\""+url+"/"+accessToken.getToken()+"/verify\">Link</a></p>";
-        helper.setText(htmlMsg, true);
-        helper.setTo(user.getEmail());
-        helper.setSubject("Activate your automatic feeder account");
+        helper.setText(htmlMessage, true);
+        helper.setTo(email);
+        helper.setSubject(subject);
         helper.setFrom("automatic.feeder.service@gmail.com");
         mailSender.send(mimeMessage);
     }

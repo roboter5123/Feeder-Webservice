@@ -1,4 +1,5 @@
 package com.roboter5123.feeder.service.api;
+
 import com.roboter5123.feeder.controller.DatabaseController;
 import com.roboter5123.feeder.controller.SocketController;
 import com.roboter5123.feeder.databaseobject.AccessToken;
@@ -44,9 +45,15 @@ public class FeederService {
 
         Feeder feeder = databaseController.findByUuid(uuid);
 
+//        TODO: PUt this in for production
+//        if (feeder != null){
+//
+//            throw new GoneException();
+//        }
+
         if (feeder == null) {
 
-            feeder = new Feeder(uuid);
+            feeder = new Feeder();
         }
 
         if (feeders.contains(feeder)) {
@@ -121,7 +128,7 @@ public class FeederService {
         user.removeFeeder(feeder);
         databaseController.save(user);
 
-        if (databaseController.findUsersByFeeder(feeder) == null){
+        if (databaseController.findUsersByFeeder(feeder) == null) {
 
             databaseController.delete(feeder);
         }
@@ -181,7 +188,6 @@ public class FeederService {
         socketController.updateFeeder(feeder.getUuid(), feeder);
         return feeder;
     }
-
 
 
 }

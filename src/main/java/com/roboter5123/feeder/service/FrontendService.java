@@ -151,4 +151,21 @@ public class FrontendService {
 
         return "verification";
     }
+
+    @GetMapping("/{token}/resetPassword")
+    public String resetPassword(@PathVariable AccessToken token, Model model){
+
+        User user = databaseController.findByAccessToken(token);
+
+//        TODO: Uncomment
+        if (user == null || user.getActivated()){
+
+//            return "redirect:/login";
+        }else {
+
+            model.addAttribute("email", user.getEmail());
+            return "resetPassword";
+        }
+        return "agg";
+    }
 }
