@@ -157,15 +157,14 @@ public class FrontendService {
 
         User user = databaseController.findByAccessToken(token);
 
-//        TODO: Uncomment
+
         if (user == null || user.getActivated()){
 
-//            return "redirect:/login";
+            return "redirect:/login";
         }else {
 
-            model.addAttribute("email", user.getEmail());
+            model.addAttribute("token", token.getToken());
             return "resetPassword";
         }
-        return "agg";
     }
 }

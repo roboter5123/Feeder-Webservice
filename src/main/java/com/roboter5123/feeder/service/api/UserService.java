@@ -243,7 +243,7 @@ public class UserService {
             throw new BadRequestException();
         }
 
-        if (!user.getActivated()){
+        if (user.getActivated()){
 
             throw new UnauthorizedException();
         }
