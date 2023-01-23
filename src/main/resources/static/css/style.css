@@ -78,7 +78,6 @@ input[type="button"], input[type="submit"] {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-shrink: 1;
 }
 
 .screenHeading {
