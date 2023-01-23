@@ -22,7 +22,7 @@ $(document).ready(function () {
         popUpButton.click(() => {
 
             let parameterValue = $("#identity").val()
-
+            loader()
             if (itemClassToAdd === "feeder"){
 
                 fetch("/api/feeder?" + new URLSearchParams({"uuid":parameterValue}), {
@@ -33,6 +33,9 @@ $(document).ready(function () {
                     if (response.ok) {
 
                         location.reload()
+                    }else{
+
+                        $(".fullScreen").remove()
                     }
                 })
 
@@ -46,9 +49,11 @@ $(document).ready(function () {
                     if (response.ok) {
 
                         location.reload()
+                    }else{
+
+                        $(".fullScreen").remove()
                     }
                 })
-
             }
         })
         popUpButton.val("submit")
@@ -84,7 +89,7 @@ $(document).ready(function () {
 
         let itemType = $(this).closest(".tile").attr("id")
         let itemIdentification = $(this).closest("li").attr("id")
-
+        loader()
         if (itemType === "feeder") {
 
             fetch("/api/feeder?" + new URLSearchParams({"uuid": itemIdentification}), {
@@ -95,6 +100,9 @@ $(document).ready(function () {
                 if (response.ok) {
 
                     location.reload()
+                }else{
+
+                    $(".fullScreen").remove()
                 }
             })
         }else if (itemType ==="schedule"){
@@ -107,9 +115,11 @@ $(document).ready(function () {
                 if (response.ok) {
 
                     location.reload()
+                }else{
+
+                    $(".fullScreen").remove()
                 }
             })
         }
-
     })
 })

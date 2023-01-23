@@ -10,7 +10,7 @@ $(document).ready(function () {
 
             return
         }
-
+        loader()
         fetch(`/api/user/resetPassword?${new URLSearchParams({"token": token})}`, {
             method: 'PUT',
             credentials: "include",
@@ -23,6 +23,9 @@ $(document).ready(function () {
             if (result.ok) {
 
                 location.replace("/login");
+            }else{
+
+                $(".fullScreen").remove()
             }
         })
     })

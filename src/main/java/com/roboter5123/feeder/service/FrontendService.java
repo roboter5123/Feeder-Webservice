@@ -1,7 +1,7 @@
 package com.roboter5123.feeder.service;
 
 import com.roboter5123.feeder.controller.DatabaseController;
-import com.roboter5123.feeder.databaseobject.*;
+import com.roboter5123.feeder.model.*;
 import com.roboter5123.feeder.util.Weekday;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -142,11 +142,11 @@ public class FrontendService {
 
         } else {
 
-            user.setAcivated(true);
+            user.setActivated(true);
             databaseController.delete(accessToken);
             databaseController.save(user);
             model.addAttribute("valid", true);
-            user.setAcivated(true);
+            user.setActivated(true);
         }
 
         return "verification";

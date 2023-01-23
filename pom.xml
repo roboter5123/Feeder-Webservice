@@ -6,11 +6,11 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.0.1</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>com.roboter5123</groupId>
     <artifactId>feeder</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.8-SNAPSHOT</version>
     <name>feeder</name>
     <description>feeder</description>
     <properties>
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
         <dependency>
@@ -95,7 +95,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${parent.version}</version>
+                <version>${project.parent.version}</version>
             </plugin>
         </plugins>
         <finalName>feeder-webservice</finalName>

@@ -1,4 +1,4 @@
-package com.roboter5123.feeder.databaseobject;
+package com.roboter5123.feeder.model;
 import com.roboter5123.feeder.exception.ConflictException;
 import jakarta.persistence.*;
 
@@ -48,25 +48,43 @@ public class Schedule implements Serializable {
         tasks.add(task);
     }
 
-    public int getScheduleId() {
+    public void removeTask(Task task) {
 
+
+        if (tasks == null){
+
+            return;
+        }
+
+        tasks.remove(task);
+
+
+    }
+
+    public Task getTask(Task task) {
+
+        if (!tasks.contains(task)){
+
+            return null;
+        }
+
+        return tasks.get(tasks.indexOf(task));
+    }
+
+    public int getScheduleId() {
         return scheduleId;
     }
 
-
-    public void setName(String name) {
-
-        this.name = name;
-    }
-
     public List<Task> getTasks() {
-
         return tasks;
     }
 
     public String getName() {
-
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -102,25 +120,5 @@ public class Schedule implements Serializable {
                 "\"}";
     }
 
-    public void removeTask(Task task) {
 
-
-        if (tasks == null){
-
-            return;
-        }
-
-        tasks.remove(task);
-
-
-    }
-
-    public Task getTask(Task task) {
-
-        if (!tasks.contains(task)){
-
-            return null;
-        }
-        return tasks.get(tasks.indexOf(task));
-    }
 }

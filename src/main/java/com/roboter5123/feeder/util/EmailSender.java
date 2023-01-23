@@ -1,6 +1,6 @@
 package com.roboter5123.feeder.util;
-import com.roboter5123.feeder.databaseobject.AccessToken;
-import com.roboter5123.feeder.databaseobject.User;
+import com.roboter5123.feeder.model.AccessToken;
+import com.roboter5123.feeder.model.User;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;

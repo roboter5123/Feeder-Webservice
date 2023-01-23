@@ -7,7 +7,7 @@ $(document).ready(function () {
         let email = $("#email").val()
         let password = $("#password").val()
         let data = {"email": email, "password": password}
-
+        loader()
         fetch("/api/access-token", {
             method: 'POST',
             headers: {
@@ -35,6 +35,7 @@ $(document).ready(function () {
         }
         let element = $("<p id ='failedLoginText'>Failed to login.<br>Please try again.</p>")
         $("#login").append(element)
+        $(".fullScreen").remove()
     }
 
     function login(data) {
