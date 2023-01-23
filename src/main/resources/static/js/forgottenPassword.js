@@ -3,21 +3,16 @@ $(document).ready(function () {
     $("input[type='submit']").click(function (e){
 
         e.preventDefault()
-        let token = $("body").attr("data")
-        let password = $("#newPassword").val()
+        let email = $("#email").val()
+        let data = {"email": email}
 
-        if (password !== $("#repeatPassword").val()){
-
-            return
-        }
-
-        fetch(`/api/user/resetPassword?${new URLSearchParams({"token": token})}`, {
-            method: 'PUT',
+        fetch(`/api/user/resetPassword`, {
+            method: 'POST',
             credentials: "include",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: password
+            body: JSON.stringify(data)
         }).then((result) => {
 
             if (result.ok) {

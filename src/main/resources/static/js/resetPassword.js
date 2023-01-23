@@ -22,7 +22,7 @@ $(document).ready(function () {
 
             if (result.ok) {
 
-                location.reload();
+                location.replace("/login");
             }
         })
     })

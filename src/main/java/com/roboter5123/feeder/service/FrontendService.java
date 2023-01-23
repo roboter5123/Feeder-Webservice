@@ -70,7 +70,7 @@ public class FrontendService {
             User user = databaseController.findByAccessToken(accessToken);
             Schedule currentSchedule = feeder.getSchedule();
 
-            if (currentSchedule == null){
+            if (currentSchedule == null) {
 
                 currentSchedule = new Schedule("-----");
                 user.addSchedule(currentSchedule);
@@ -131,7 +131,7 @@ public class FrontendService {
     }
 
     @GetMapping("/{token}/verify")
-        public String verifyAccount(@PathVariable String token, Model model) {
+    public String verifyAccount(@PathVariable String token, Model model) {
 
         AccessToken accessToken = databaseController.findByToken(token);
         User user = databaseController.findByAccessToken(accessToken);
@@ -153,18 +153,22 @@ public class FrontendService {
     }
 
     @GetMapping("/{token}/resetPassword")
-    public String resetPassword(@PathVariable AccessToken token, Model model){
+    public String resetPassword(@PathVariable AccessToken token, Model model) {
 
         User user = databaseController.findByAccessToken(token);
 
-
-        if (user == null || user.getActivated()){
+        if (user == null || user.getActivated()) {
 
             return "redirect:/login";
-        }else {
+        } else {
 
             model.addAttribute("token", token.getToken());
             return "resetPassword";
         }
     }
-}
+
+    @GetMapping("/resetPassword")
+    public String resetPassword() {
+
+        return "forgottenPassword";
+    }}
