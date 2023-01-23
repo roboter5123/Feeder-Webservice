@@ -72,6 +72,18 @@ public class Task implements Serializable, Comparable<Task> {
         }
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
+    public int getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
+    }
+
     @Override
     public int hashCode() {
 
