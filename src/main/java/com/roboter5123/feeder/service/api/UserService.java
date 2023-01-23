@@ -1,8 +1,8 @@
 package com.roboter5123.feeder.service.api;
 
 import com.roboter5123.feeder.controller.DatabaseController;
-import com.roboter5123.feeder.databaseobject.AccessToken;
-import com.roboter5123.feeder.databaseobject.User;
+import com.roboter5123.feeder.model.AccessToken;
+import com.roboter5123.feeder.model.User;
 import com.roboter5123.feeder.exception.BadRequestException;
 import com.roboter5123.feeder.exception.GoneException;
 import com.roboter5123.feeder.exception.InternalErrorException;
@@ -168,7 +168,7 @@ public class UserService {
             throw new InternalErrorException();
         }
 
-        user.setAcivated(false);
+        user.setActivated(false);
         AccessToken accessToken = generateAccessToken();
         emailSender.verificationMail(user, accessToken);
         databaseController.save(accessToken);
@@ -203,7 +203,7 @@ public class UserService {
     private User verifyUser(@RequestParam AccessToken token) throws MessagingException {
 
         User user = databaseController.findByAccessToken(token);
-        user.setAcivated(true);
+        user.setActivated(true);
         databaseController.save(user);
         databaseController.delete(token);
         token = generateAccessToken();
@@ -218,7 +218,7 @@ public class UserService {
     private User resetPassword(@RequestBody User user) throws MessagingException {
 
         user = databaseController.findByEmail(user.getEmail());
-        user.setAcivated(false);
+        user.setActivated(false);
         AccessToken accessToken = generateAccessToken();
         user.setAccessToken(accessToken);
         databaseController.save(user);
@@ -257,7 +257,7 @@ public class UserService {
 
         password = saltAndHashPassword(password, salt);
         user.setPassword(password);
-        user.setAcivated(true);
+        user.setActivated(true);
         databaseController.delete(token);
         databaseController.save(user);
         return user;

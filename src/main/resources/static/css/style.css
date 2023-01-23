@@ -178,3 +178,9 @@ i.active {
     align-items: center;
     justify-content: center;
 }
+
+#loader{
+
+    height: 250px;
+    width: 250px;
+}

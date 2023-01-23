@@ -1,7 +1,7 @@
 package com.roboter5123.feeder.service.api;
 import com.roboter5123.feeder.controller.DatabaseController;
 import com.roboter5123.feeder.controller.SocketController;
-import com.roboter5123.feeder.databaseobject.*;
+import com.roboter5123.feeder.model.*;
 import com.roboter5123.feeder.exception.BadRequestException;
 import com.roboter5123.feeder.exception.ConflictException;
 import com.roboter5123.feeder.exception.GoneException;

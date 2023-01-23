@@ -2,10 +2,10 @@ package com.roboter5123.feeder.service.api;
 
 import com.roboter5123.feeder.controller.DatabaseController;
 import com.roboter5123.feeder.controller.SocketController;
-import com.roboter5123.feeder.databaseobject.AccessToken;
-import com.roboter5123.feeder.databaseobject.Feeder;
-import com.roboter5123.feeder.databaseobject.Schedule;
-import com.roboter5123.feeder.databaseobject.User;
+import com.roboter5123.feeder.model.AccessToken;
+import com.roboter5123.feeder.model.Feeder;
+import com.roboter5123.feeder.model.Schedule;
+import com.roboter5123.feeder.model.User;
 import com.roboter5123.feeder.exception.BadRequestException;
 import com.roboter5123.feeder.exception.ConflictException;
 import com.roboter5123.feeder.exception.GoneException;

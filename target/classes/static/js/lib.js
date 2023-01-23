@@ -32,4 +32,15 @@ $(document).ready(function () {
 
         location.reload()
     })
+
 })
+
+function loader(){
+
+    let loader = $("<img>")
+    loader.attr("src", "/img/loader.png")
+    loader.attr("id", "loader")
+    let loaderDiv = $("<div class='fullScreen'></div>")
+    loaderDiv.append(loader)
+    $("body").append(loaderDiv)
+}

@@ -1,4 +1,5 @@
-package com.roboter5123.feeder.databaseobject;
+package com.roboter5123.feeder.model;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -16,7 +17,6 @@ public class AccessToken {
     private LocalDateTime expires;
 
     public AccessToken() {
-
     }
 
     public AccessToken(String token) {

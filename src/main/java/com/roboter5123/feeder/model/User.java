@@ -1,4 +1,4 @@
-package com.roboter5123.feeder.databaseobject;
+package com.roboter5123.feeder.model;
 
 import com.roboter5123.feeder.exception.GoneException;
 import jakarta.persistence.*;
@@ -76,7 +76,6 @@ public class User implements Serializable {
         this.accessToken = accessToken;
     }
 
-
     public byte[] getSalt() {
 
         return salt;
@@ -112,6 +111,21 @@ public class User implements Serializable {
         this.feeders = feeders;
     }
 
+    public void removeFeeder(Feeder feeder) {
+
+        feeders.remove(feeder);
+    }
+
+    public void setActivated(boolean b) {
+
+        this.activated = b;
+    }
+
+    public boolean getActivated() {
+
+        return activated;
+    }
+
     @Override
     public String toString() {
 
@@ -121,20 +135,5 @@ public class User implements Serializable {
                 ", salt='" + Arrays.toString(salt) + '\'' +
                 ", feeders=" + feeders +
                 '}';
-    }
-
-    public void removeFeeder(Feeder feeder) {
-
-        feeders.remove(feeder);
-    }
-
-    public void setAcivated(boolean b) {
-
-        this.activated = b;
-    }
-
-    public boolean getActivated() {
-
-        return activated;
     }
 }

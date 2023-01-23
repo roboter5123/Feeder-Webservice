@@ -1,6 +1,6 @@
 package com.roboter5123.feeder.controller;
-import com.roboter5123.feeder.databaseobject.Dispensation;
-import com.roboter5123.feeder.databaseobject.Feeder;
+import com.roboter5123.feeder.model.Dispensation;
+import com.roboter5123.feeder.model.Feeder;
 import com.roboter5123.feeder.exception.GoneException;
 import com.roboter5123.feeder.util.FeederConnection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class SocketController extends Thread {
 
             } catch (IOException e) {
 
-                throw new RuntimeException(e);
+                continue;
             }
 
             Feeder feeder = addConnection(newConnection);

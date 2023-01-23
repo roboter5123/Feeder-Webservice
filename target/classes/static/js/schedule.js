@@ -9,7 +9,7 @@ $(document).ready(function () {
                 "amount": null,
                 "time": null
             }
-
+        loader()
         fetch(`/api/task?${new URLSearchParams({"scheduleName": name})}`, {
             method: 'POST',
             credentials: "include",
@@ -22,6 +22,9 @@ $(document).ready(function () {
             if (result.ok) {
 
                 location.reload();
+            }else{
+
+                $(".fullScreen").remove()
             }
         })
     })
@@ -58,7 +61,7 @@ $(document).ready(function () {
         } else {
 
             //    reset task
-            location.reload();
+            $(".fullScreen").remove()
         }
     })
 
@@ -82,6 +85,9 @@ $(document).ready(function () {
             if (result.ok) {
 
                 location.reload()
+            }else{
+
+                $(".fullScreen").remove()
             }
         })
     })
@@ -100,6 +106,9 @@ $(document).ready(function () {
             if (result.ok) {
 
                 location.replace("/schedule/" + newName.trim())
+            }else{
+
+                $(".fullScreen").remove()
             }
         })
     })

@@ -1,6 +1,6 @@
 package com.roboter5123.feeder.controller;
 
-import com.roboter5123.feeder.databaseobject.*;
+import com.roboter5123.feeder.model.*;
 import com.roboter5123.feeder.datasource.*;
 import org.springframework.stereotype.Controller;
 
@@ -10,27 +10,27 @@ import java.util.UUID;
 @Controller
 public class DatabaseController {
 
-    private final FeederDao feederDao;
-    private final ScheduleDao scheduleDao;
-    private final TaskDao taskDao;
-    private final UserDao userDao;
+    private final FeederRepository feederRepository;
+    private final ScheduleRepository scheduleRepository;
+    private final TaskRepository taskRepository;
+    private final UserRepository userRepository;
     private final AccessTokenRepository accessTokenRepository;
     private final DispensationRepository dispensationRepository;
 
-    public DatabaseController(FeederDao feederDao, ScheduleDao scheduleDao, TaskDao taskDao, UserDao userDao, AccessTokenRepository accessTokenRepository,
+    public DatabaseController(FeederRepository feederRepository, ScheduleRepository scheduleRepository, TaskRepository taskRepository, UserRepository userRepository, AccessTokenRepository accessTokenRepository,
                               DispensationRepository dispensationRepository) {
 
-        this.feederDao = feederDao;
-        this.scheduleDao = scheduleDao;
-        this.taskDao = taskDao;
-        this.userDao = userDao;
+        this.feederRepository = feederRepository;
+        this.scheduleRepository = scheduleRepository;
+        this.taskRepository = taskRepository;
+        this.userRepository = userRepository;
         this.accessTokenRepository = accessTokenRepository;
         this.dispensationRepository = dispensationRepository;
     }
 
     public void save(User user) {
 
-        userDao.save(user);
+        userRepository.save(user);
     }
 
     public void save(AccessToken accessToken) {
@@ -40,49 +40,49 @@ public class DatabaseController {
 
     public void save(Feeder feeder) {
 
-        feederDao.save(feeder);
+        feederRepository.save(feeder);
     }
 
     public void delete(AccessToken accessToken) {
 
-        User user = userDao.findByAccessToken(accessToken);
+        User user = userRepository.findByAccessToken(accessToken);
         user.setAccessToken(null);
-        userDao.save(user);
+        userRepository.save(user);
         accessTokenRepository.deleteById(accessToken.getToken());
     }
 
     public void delete(Feeder feeder) {
 
-        List<User> users = userDao.findByFeeders_Uuid(feeder.getUuid());
+        List<User> users = userRepository.findByFeeders_Uuid(feeder.getUuid());
         for (User user : users) {
 
             user.setFeeder(feeder.getUuid(), null);
-            userDao.save(user);
+            userRepository.save(user);
         }
-        feederDao.delete(feeder);
+        feederRepository.delete(feeder);
     }
 
     public void delete(Schedule schedule) {
 
-        taskDao.deleteAll(schedule.getTasks());
-        List<Feeder> feeders = feederDao.findBySchedule(schedule);
+        taskRepository.deleteAll(schedule.getTasks());
+        List<Feeder> feeders = feederRepository.findBySchedule(schedule);
         for (Feeder feeder : feeders) {
 
             feeder.setSchedule(null);
         }
 
-        feederDao.saveAll(feeders);
-        scheduleDao.delete(schedule);
+        feederRepository.saveAll(feeders);
+        scheduleRepository.delete(schedule);
     }
 
     public User findByEmail(String email) {
 
-        return userDao.findByEmail(email);
+        return userRepository.findByEmail(email);
     }
 
     public User findByAccessToken(AccessToken accessToken) {
 
-        return userDao.findByAccessToken(accessToken);
+        return userRepository.findByAccessToken(accessToken);
     }
 
     public AccessToken findByToken(String token) {
@@ -92,17 +92,17 @@ public class DatabaseController {
 
     public Feeder findByUuid(UUID uuid) {
 
-        return feederDao.findByUuid(uuid);
+        return feederRepository.findByUuid(uuid);
     }
 
     public List <Feeder> findBySchedule(Schedule schedule){
 
-        return feederDao.findBySchedule(schedule);
+        return feederRepository.findBySchedule(schedule);
     }
 
     public void save(Schedule schedule) {
 
-        scheduleDao.save(schedule);
+        scheduleRepository.save(schedule);
     }
 
     public void save(Dispensation dispensation) {
@@ -110,30 +110,28 @@ public class DatabaseController {
         dispensationRepository.save(dispensation);
     }
 
-
-
     public void save(Task task) {
 
-    taskDao.save(task);
+    taskRepository.save(task);
     }
 
     public void delete(Task task) {
 
-        taskDao.delete(task);
+        taskRepository.delete(task);
     }
 
     public Schedule findByScheduleName(String scheduleName) {
 
-        return scheduleDao.findByName(scheduleName);
+        return scheduleRepository.findByName(scheduleName);
     }
 
     public Task findByTaskId(int taskId) {
 
-        return taskDao.findByTaskId(taskId);
+        return taskRepository.findByTaskId(taskId);
     }
 
     public List<User> findUsersByFeeder(Feeder feeder) {
 
-        return userDao.findByFeeders_Uuid(feeder.getUuid());
+        return userRepository.findByFeeders_Uuid(feeder.getUuid());
     }
 }

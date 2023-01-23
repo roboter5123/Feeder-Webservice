@@ -5,7 +5,7 @@ $(document).ready(function () {
         e.preventDefault()
         let email = $("#email").val()
         let data = {"email": email}
-
+        loader()
         fetch(`/api/user/resetPassword`, {
             method: 'POST',
             credentials: "include",
@@ -18,6 +18,9 @@ $(document).ready(function () {
             if (result.ok) {
 
                 location.replace("/login");
+            }else{
+
+                $(".fullScreen").remove()
             }
         })
     })

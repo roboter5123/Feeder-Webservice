@@ -1,5 +1,5 @@
 package com.roboter5123.feeder.datasource;
-import com.roboter5123.feeder.databaseobject.AccessToken;
+import com.roboter5123.feeder.model.AccessToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 

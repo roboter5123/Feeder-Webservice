@@ -1,8 +1,9 @@
-package com.roboter5123.feeder.databaseobject;
+package com.roboter5123.feeder.model;
 
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -29,6 +30,27 @@ public class Feeder implements Serializable {
     public Feeder(UUID uuid) {
 
         this.uuid = uuid;
+        this.dispensations = new ArrayList<>();
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
+    }
+
+    public List<Dispensation> getDispensations() {
+        return dispensations;
     }
 
     public void addDispensation(Dispensation dispensation) {
@@ -36,34 +58,12 @@ public class Feeder implements Serializable {
         dispensations.add(dispensation);
     }
 
-    public void setName(String name) {
-
-        this.name = name;
-    }
-
-    public Schedule getSchedule() {
-
-        return schedule;
-    }
-
-    public void setSchedule(Schedule schedule) {
-
-        this.schedule = schedule;
-    }
-
-    public UUID getUuid() {
-
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-
-        this.uuid = uuid;
-    }
-
     public String getName() {
-
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -91,8 +91,4 @@ public class Feeder implements Serializable {
                 "\"}";
     }
 
-    public List<Dispensation> getDispensations() {
-
-        return dispensations;
-    }
 }

@@ -1,4 +1,4 @@
-package com.roboter5123.feeder.databaseobject;
+package com.roboter5123.feeder.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,23 +28,16 @@ public class Dispensation implements Serializable, Comparable<Dispensation> {
         this.time = time;
     }
 
-    public LocalDateTime getTime() {
-
-        return time;
-    }
-
     public int getAmount() {
-
         return amount;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "\"dispensationId\":" + dispensationId +
-                ", \"amount\":" + amount +
-                ", \"time\":\"" + time +
-                "\"}";
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
     @Override
@@ -62,5 +55,16 @@ public class Dispensation implements Serializable, Comparable<Dispensation> {
             return -1;
         }
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"dispensationId\":" + dispensationId +
+                ", \"amount\":" + amount +
+                ", \"time\":\"" + time +
+                "\"}";
+    }
+
+
 }
 

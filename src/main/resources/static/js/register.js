@@ -7,7 +7,7 @@ $(document).ready(function () {
         let email = $("#email").val()
         let password = $("#password").val()
         let data = {"email": email, "password": password}
-
+        loader()
         fetch("/api/user", {
             method: 'POST',
             headers: {
@@ -23,6 +23,7 @@ $(document).ready(function () {
             } else {
 
                 failedRegister()
+                $(".fullScreen").remove()
             }
         })
     })
