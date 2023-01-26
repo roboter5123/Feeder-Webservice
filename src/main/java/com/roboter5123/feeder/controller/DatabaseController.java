@@ -117,7 +117,11 @@ public class DatabaseController {
 
     public void delete(Task task) {
 
-        taskRepository.delete(task);
+        try{
+        taskRepository.delete(task);}catch (Exception e){
+
+            e.printStackTrace();
+        }
     }
 
     public Schedule findByScheduleName(String scheduleName) {

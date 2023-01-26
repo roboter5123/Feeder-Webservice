@@ -61,12 +61,13 @@ $(document).ready(function () {
         } else {
 
             //    reset task
-            $(".fullScreen").remove()
+            location.reload();
         }
     })
 
     $(".deleteTask").click(function () {
 
+        console.log("delete")
         let name = $("#name").text();
         let time = $(this).siblings(".time").val();
         let amount = $(this).siblings(".amount").val()

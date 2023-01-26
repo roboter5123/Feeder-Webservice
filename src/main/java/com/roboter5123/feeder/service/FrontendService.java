@@ -112,7 +112,6 @@ public class FrontendService {
 
             for (Task task : schedule.getTasks()) {
 
-
                 days.get(task.getWeekday().name()).add(task);
             }
 
