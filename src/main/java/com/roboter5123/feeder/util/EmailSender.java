@@ -9,6 +9,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
+/**
+ * Used to send various kinds of emails needed in the process of using the API
+ */
 @Component
 public class EmailSender{
 
@@ -23,6 +26,12 @@ public class EmailSender{
         this.mailSender = mailSender;
     }
 
+    /**
+     * Sends a verification email so the user can activate their account
+     * @param user The user to send the email to
+     * @param accessToken Used to identify the user in the verification link
+     * @throws MessagingException Thrown if the email doesn't exist anymore
+     */
     public void verificationMail(User user, AccessToken accessToken) throws MessagingException {
 
         String htmlMsg = "<p>Please click this link to activate your account: <a href=\""+url+"/"+accessToken.getToken()+"/verify\">Link</a></p>";
@@ -30,6 +39,12 @@ public class EmailSender{
         sendMail(user.getEmail(), htmlMsg, subject);
     }
 
+    /**
+     * Sends a password reset email so the user can reactivate their account
+     * @param user The user to send the email to
+     * @param token Used to identify the user in the verification link
+     * @throws MessagingException Thrown if the email doesn't exist anymore
+     */
     public void resetMail(User user, AccessToken token) throws MessagingException {
 
         String htmlMsg = "<p>Please click this link to change your password: <a href=\""+url+"/"+token.getToken()+"/resetPassword\">Link</a></p>";

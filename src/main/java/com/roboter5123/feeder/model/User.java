@@ -8,6 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Representation of a user
+ * @author roboter5123
+ */
 @Entity
 @Table(name = "user")
 public class User implements Serializable {

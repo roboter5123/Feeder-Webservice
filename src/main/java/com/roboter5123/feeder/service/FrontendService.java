@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * Serves the Web frontend
+ * @author roboter5123
+ */
 @Controller
 public class FrontendService {
     DatabaseController databaseController;
@@ -96,7 +100,7 @@ public class FrontendService {
     }
 
     @GetMapping("/schedule/{name}")
-    public String getFeeder(@CookieValue(name = "access-token", required = false) AccessToken accessToken, @PathVariable String name, Model model) {
+    public String getSchedule(@CookieValue(name = "access-token", required = false) AccessToken accessToken, @PathVariable String name, Model model) {
 
         if (accessToken != null && databaseController.findByAccessToken(accessToken) != null) {
             User user = databaseController.findByAccessToken(accessToken);

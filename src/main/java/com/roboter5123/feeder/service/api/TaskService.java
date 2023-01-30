@@ -8,10 +8,15 @@ import com.roboter5123.feeder.exception.GoneException;
 import com.roboter5123.feeder.exception.UnauthorizedException;
 import com.roboter5123.feeder.util.Weekday;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalTime;
 
+/**
+ * Api used to manage tasks
+ * @author roboter5123
+ */
 @RestController
 public class TaskService {
 
@@ -25,7 +30,15 @@ public class TaskService {
         this.socketController = socketController;
     }
 
+    /**
+     * Creates a task in a given schedule
+     * @param accessToken used to authenticate the user
+     * @param scheduleName used to find the schedule
+     * @param task the task to create and put into the schedule
+     * @return the schedule with the new task
+     */
     @RequestMapping(value = "/api/task", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
     public Schedule createTask(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam String
             scheduleName, @RequestBody Task task) {
 
@@ -43,7 +56,7 @@ public class TaskService {
             throw new GoneException();
         }
 
-        if (task.isInValid()) {
+        if (task.isInvalid()) {
 
             throw new BadRequestException();
         }
@@ -68,7 +81,15 @@ public class TaskService {
         return user.getSchedule(scheduleName);
     }
 
+    /**
+     * Deletes a task from a given schedule
+     * @param accessToken used to authenticate the user
+     * @param scheduleName used to find the schedule
+     * @param task the task to delete from the schedule
+     * @return the schedule without the given task
+     */
     @RequestMapping(value = "/api/task", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.OK)
     public Schedule deleteTask(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam String
             scheduleName, @RequestBody Task task) {
 
@@ -86,7 +107,7 @@ public class TaskService {
             throw new GoneException();
         }
 
-        if (task.isInValid()) {
+        if (task.isInvalid()) {
 
             throw new BadRequestException();
         }
@@ -107,7 +128,18 @@ public class TaskService {
         return user.getSchedule(scheduleName);
     }
 
+    /**
+     * Changes a tasks properties
+     * @param accessToken used to find the schedule
+     * @param scheduleName used to find the schedule
+     * @param taskId used to find the task in the schedule
+     * @param time at which the task should be done
+     * @param day on which the task should be done
+     * @param amount which should be dispensed
+     * @return schedule the task is a child of
+     */
     @RequestMapping(value = "/api/task", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
     public Schedule changeTask(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam String
             scheduleName,
                                @RequestParam int taskId, @RequestParam(required = false) LocalTime time,

@@ -8,12 +8,17 @@ import com.roboter5123.feeder.model.User;
 import com.roboter5123.feeder.exception.GoneException;
 import com.roboter5123.feeder.exception.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Api used to manage Dispensations
+ * @author roboter5123
+ */
 @RestController
 public class DispensationService {
 
@@ -27,8 +32,14 @@ public class DispensationService {
         this.socketController = socketController;
     }
 
-
+    /**
+     * Sends a dispense command to the give feeder if the user has authorization for that feeder.
+     * @param accessToken Used to authorize a user
+     * @param amount The amount of food to dispense
+     * @param uuid used to find the feeder
+     */
     @RequestMapping(value = "/api/dispense", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
     public void dispense(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam int amount,
                          @RequestParam UUID uuid) {
 
@@ -51,7 +62,13 @@ public class DispensationService {
         databaseController.save(dispensation);
     }
 
+    /**
+     * Called by a feeder when it dispenses on schedule
+     * @param amount the amount of food dispensed
+     * @param uuid used to find the feeder that dispensed
+     */
     @RequestMapping(value = "/api/{uuid}/dispense", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
     public void piDispensed(@RequestParam int amount, @PathVariable UUID uuid) {
 
         Feeder feeder = databaseController.findByUuid(uuid);
@@ -66,8 +83,15 @@ public class DispensationService {
         databaseController.save(dispensation);
     }
 
+    /**
+     * Gets all dispenses associated with a feeder
+     * @param accessToken used to check authorization of a user
+     * @param uuid used to find the feeder whose dispensations to get
+     * @return a list of all dispensations the feeder has done in its lifetime
+     */
     @RequestMapping(value = "/api/dispense", method = RequestMethod.GET)
-    public List<Dispensation> dispense(@CookieValue(name = "access-token") AccessToken
+    @ResponseStatus(HttpStatus.OK)
+    public List<Dispensation> getDispenses(@CookieValue(name = "access-token") AccessToken
                                                accessToken, @RequestParam UUID uuid) {
 
         User user = databaseController.findByAccessToken(accessToken);

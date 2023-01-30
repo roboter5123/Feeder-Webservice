@@ -7,6 +7,10 @@ import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
 
+/**
+ * Used to authenticate and check authorization of a user
+ * @author roboter5123
+ */
 @Entity
 @Table(name = "access_token")
 public class AccessToken {
@@ -16,8 +20,7 @@ public class AccessToken {
     private String token;
     private LocalDateTime expires;
 
-    public AccessToken() {
-    }
+    public AccessToken() {}
 
     public AccessToken(String token) {
 

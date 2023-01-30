@@ -14,6 +14,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
@@ -23,6 +24,10 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Base64;
 
+/**
+ * Api used to manage users and access tokens
+ * @author roboter5123
+ */
 @RestController
 public class UserService {
 
@@ -39,8 +44,15 @@ public class UserService {
         this.emailSender = emailSender;
     }
 
+    /**
+     * creates a accesstoken to authenticate and authorize a user with
+     * @param user must include email and password. Everything else is not needed. TODO: Maybe make a class just for this?
+     * @param response used to send back a cookie with the access token
+     * @return a access token the user can use to authenticate for using the api
+     */
     @RequestMapping(value = "/api/access-token", method = RequestMethod.POST)
     @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
     public AccessToken createAccessToken(@RequestBody User user, HttpServletResponse response) {
 
         User databaseUser = databaseController.findByEmail(user.getEmail());
@@ -93,6 +105,10 @@ public class UserService {
         return accessToken;
     }
 
+    /**
+     * Generates and saves an accesstoken
+     * @return a new accesstoken that's saved in the database
+     */
     public AccessToken generateAccessToken() {
 
         SecureRandom secureRandom = new SecureRandom();
@@ -106,7 +122,13 @@ public class UserService {
         return accessToken;
     }
 
+    /**
+     * Gets an access token from the database for checking the expiration date
+     * @param accessToken the access token to find
+     * @return the access token that was found
+     */
     @RequestMapping(value = "/api/access-token", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
     public AccessToken retrieveAccessToken(@CookieValue(name = "access-token") AccessToken accessToken) {
 
         accessToken = databaseController.findByToken(accessToken.getToken());
@@ -125,7 +147,13 @@ public class UserService {
         return accessToken;
     }
 
+    /**
+     * Deletes an access token from the database thus cutting authorization for the user
+     * @param accessToken the access token to delete
+     * @param response used to update the users cookie with an expired one
+     */
     @RequestMapping(value = "/api/access-token", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.OK)
     public void deleteAccessToken(@CookieValue(name = "access-token") AccessToken accessToken, HttpServletResponse response) {
 
         accessToken = databaseController.findByToken(accessToken.getToken());
@@ -142,8 +170,14 @@ public class UserService {
         response.addCookie(cookie);
     }
 
+    /**
+     * Used to register a user to the service
+     * @param user must include email and password. Everything else is not needed. TODO: Maybe make a class just for this?
+     * @throws MessagingException thrown when the email address couldn't be delivered to
+     */
     @RequestMapping(value = "/api/user", method = RequestMethod.POST)
     @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
     public void postUser(@RequestBody User user) throws MessagingException {
 
         if (!MakeAbstractRequest.checkEmail(user.getEmail(), abstractAPIKey)) {
@@ -176,6 +210,9 @@ public class UserService {
         databaseController.save(user);
     }
 
+    /**
+     * @return salt for salting is salty
+     */
     private byte[] generateSalt() {
 
         SecureRandom random = new SecureRandom();
@@ -184,6 +221,12 @@ public class UserService {
         return salt;
     }
 
+    /**
+     * @param password to hash and salt
+     * @param salt to salt the hash with
+     * @return base 64 encoded salted and hashed password
+     * @throws NoSuchAlgorithmException Never really thrown but has to be declared
+     */
     private String saltAndHashPassword(String password, byte[] salt) throws NoSuchAlgorithmException {
 
         MessageDigest md = MessageDigest.getInstance("SHA-512");
@@ -193,13 +236,23 @@ public class UserService {
         return Base64.getEncoder().encodeToString(hashedPassword);
     }
 
+    /**
+     * used to check if an email is already registered to the service
+     * @param user onyly needs to include an email TODO: Maybe change this to just a string?
+     * @return registration status of email
+     */
     private boolean isEmailRegistered(User user) {
 
         return databaseController.findByEmail(user.getEmail()) != null;
     }
 
+    /**
+     * I don't know what this was used for or how it was supposed to verify the user
+     * @deprecated
+     */
     @RequestMapping(value = "/api/user/verify", method = RequestMethod.PUT)
     @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
     private User verifyUser(@RequestParam AccessToken token) throws MessagingException {
 
         User user = databaseController.findByAccessToken(token);
@@ -213,8 +266,15 @@ public class UserService {
         return user;
     }
 
+    /**
+     * Sends a password reset email to the user
+     * @param user must include email TODO: Maybe switch this out for a string as email
+     * @return the user whose password was changed
+     * @throws MessagingException thrown if the email isn't deliverable
+     */
     @RequestMapping(value = "/api/user/resetPassword", method = RequestMethod.POST)
     @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
     private User resetPassword(@RequestBody User user) throws MessagingException {
 
         user = databaseController.findByEmail(user.getEmail());
@@ -226,8 +286,16 @@ public class UserService {
         return user;
     }
 
+    /**
+     * Sets the password of the given user to the given password
+     * @param token used to authenricate the user
+     * @param password to change
+     * @return the user which has been changed
+     * @throws NoSuchAlgorithmException Never really thrown but has to be declared
+     */
     @RequestMapping(value = "/api/user/resetPassword", method = RequestMethod.PUT)
     @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
     private User resetPassword(@RequestParam AccessToken token, @RequestBody String password) throws NoSuchAlgorithmException {
 
         User user = databaseController.findByAccessToken(token);

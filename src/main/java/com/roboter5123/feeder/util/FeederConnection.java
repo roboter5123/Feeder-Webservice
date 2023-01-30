@@ -6,6 +6,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.UUID;
 
+/**
+ * Represents a feeder that is currently connected.
+ * Can send and receive Commands to the feeder.
+ */
 public class FeederConnection {
 
     private final BufferedReader in;

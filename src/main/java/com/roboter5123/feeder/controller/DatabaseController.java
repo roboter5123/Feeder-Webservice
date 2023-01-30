@@ -7,6 +7,10 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Database Controller is a wrapper class around the JPA Repositories for the API Model. This makes it easier to save all kinds of objects by providing a single object to use
+ * @author roboter5123
+ */
 @Controller
 public class DatabaseController {
 
@@ -27,6 +31,7 @@ public class DatabaseController {
         this.accessTokenRepository = accessTokenRepository;
         this.dispensationRepository = dispensationRepository;
     }
+
 
     public void save(User user) {
 
