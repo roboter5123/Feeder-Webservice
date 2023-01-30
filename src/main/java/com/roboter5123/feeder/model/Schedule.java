@@ -54,15 +54,12 @@ public class Schedule implements Serializable {
 
     public void removeTask(Task task) {
 
-
         if (tasks == null){
 
             return;
         }
 
         tasks.remove(task);
-
-
     }
 
     public Task getTask(Task task) {

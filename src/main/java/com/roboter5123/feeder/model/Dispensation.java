@@ -42,6 +42,15 @@ public class Dispensation implements Serializable, Comparable<Dispensation> {
         this.time = time;
     }
 
+    public void setDispensationId(int id) {
+        this.dispensationId = id;
+    }
+
+    public int getDispensationId() {
+
+        return this.dispensationId;
+    }
+
     @Override
     public int compareTo(Dispensation o) {
 
@@ -52,9 +61,10 @@ public class Dispensation implements Serializable, Comparable<Dispensation> {
         } else if (this.time.isEqual(o.getTime())) {
 
             return 0;
+
         } else {
 
-            return -1;
+            return 1;
         }
     }
 
@@ -62,11 +72,9 @@ public class Dispensation implements Serializable, Comparable<Dispensation> {
     public String toString() {
         return "{" +
                 "\"dispensationId\":" + dispensationId +
-                ", \"amount\":" + amount +
-                ", \"time\":\"" + time +
+                ",\"amount\":" + amount +
+                ",\"time\":\"" + time +
                 "\"}";
     }
-
-
 }
 
