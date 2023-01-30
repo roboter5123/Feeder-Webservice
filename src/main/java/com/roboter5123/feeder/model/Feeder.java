@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * A representation of a feeder. Also used to set the settings of a feeder by sending this as a string
+ * @author roboter5123
+ */
 @Entity
 @Table(name = "feeder")
 public class Feeder implements Serializable {

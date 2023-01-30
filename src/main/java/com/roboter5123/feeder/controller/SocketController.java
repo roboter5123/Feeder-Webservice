@@ -11,6 +11,10 @@ import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.UUID;
 
+/**
+ * SocketController is a separate thread which takes a undetermined amount of socket connections from feeders and sends messages to them.
+ * @author roboter5123
+ */
 @Controller
 public class SocketController extends Thread {
 
@@ -37,7 +41,10 @@ public class SocketController extends Thread {
         this.start();
     }
 
-    public void run() {
+    /**
+     * Main Method starts the socket server for accepting connections and manages them.
+     */
+    public void run(){
 
         boolean running = true;
 
@@ -70,7 +77,7 @@ public class SocketController extends Thread {
         }
     }
 
-    public Feeder addConnection(FeederConnection newConnection) {
+    private Feeder addConnection(FeederConnection newConnection) {
 
         Feeder feeder = databaseController.findByUuid(newConnection.getUuid());
 
@@ -86,11 +93,21 @@ public class SocketController extends Thread {
         return feeder;
     }
 
-    public FeederConnection getConnection(UUID uuid) throws NullPointerException {
+    /**
+     * @param uuid of the feeder that is connected
+     * @return The feeder connection for the corresponding feeder
+     * @throws NullPointerException thrown if the feeder hasn't connected yet.
+     */
+    private FeederConnection getConnection(UUID uuid) throws NullPointerException {
 
         return this.connections.get(uuid);
     }
 
+    /**
+     * Sends a dispense Command to the specified feeder over the server socket
+     * @param uuid Used to find the feeder in the connection hashmap
+     * @param dispensation Is sent to the feeder to dispense
+     */
     public void dispense(UUID uuid, Dispensation dispensation) {
 
         try {
@@ -104,7 +121,14 @@ public class SocketController extends Thread {
         }
     }
 
-    public void sendMessage(UUID uuid, String message) throws IOException, NullPointerException {
+    /**
+     * Sends an arbitrary message to the feeder specified.
+     * @param uuid Used to find the feeder in the connection hashmap
+     * @param message Should include a command and args. Seperated by #. Example: "set#" + feeder.toString()
+     * @throws IOException Thrown when the feeders connection is lost during sending
+     * @throws NullPointerException thrown if the feeder hasn't connected yet.
+     */
+    private void sendMessage(UUID uuid, String message) throws IOException, NullPointerException {
 
         FeederConnection connection = this.getConnection(uuid);
 
@@ -115,6 +139,12 @@ public class SocketController extends Thread {
         connection.sendCommand(message);
     }
 
+    /**
+     * Called when a feeder connects to the server and when changes are made to its representation in the database.
+     * And updates the feeder to its current status in the database
+     * @param uuid Used to find the feeder in the connection hashmap
+     * @param feeder All the settings to set on the feeder
+     */
     public void updateFeeder(UUID uuid, Feeder feeder){
 
         String message = "set#" + feeder.toString();

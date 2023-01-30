@@ -1,4 +1,5 @@
 package com.roboter5123.feeder.util;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.http.client.fluent.Content;
@@ -6,6 +7,9 @@ import org.apache.http.client.fluent.Request;
 
 import java.io.IOException;
 
+/**
+ * Used to make a request to the Abstract™ API for checking if an email is valid.
+ */
 public class MakeAbstractRequest {
 
     public static boolean checkEmail(String email, String apiKey) {
@@ -21,8 +25,10 @@ public class MakeAbstractRequest {
             return jsonObject.get("deliverability").getAsString().equals("DELIVERABLE");
 
         } catch (IOException error) {
+
             error.printStackTrace();
         }
+
         return false;
     }
 }

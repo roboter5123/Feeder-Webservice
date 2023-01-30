@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
+/**
+ * Used to Configure and return a java email sender for use in the EmailSender Class
+ */
 @Component
 public class EmailSenderMaker {
 

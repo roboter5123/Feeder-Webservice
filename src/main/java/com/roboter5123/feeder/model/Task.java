@@ -7,6 +7,10 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+/**
+ * Representation of a planned dispensation that happens once every week or every day
+ * @author roboter5123
+ */
 @Entity
 @Table(name = "Task")
 public class Task implements Serializable, Comparable<Task> {
@@ -21,7 +25,7 @@ public class Task implements Serializable, Comparable<Task> {
     public Task() {
 
     }
-    public boolean isInValid() {
+    public boolean isInvalid() {
 
         return weekday == null ;
     }

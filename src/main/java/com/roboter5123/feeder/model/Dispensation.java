@@ -8,6 +8,10 @@ import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * Used as a representation of a dispense action by the feeder
+ * @author roboter5123
+ */
 @Entity
 @Table(name = "dispensation")
 public class Dispensation implements Serializable, Comparable<Dispensation> {
@@ -18,9 +22,7 @@ public class Dispensation implements Serializable, Comparable<Dispensation> {
     private int amount;
     private LocalDateTime time;
 
-    public Dispensation() {
-
-    }
+    public Dispensation() {}
 
     public Dispensation(int amount, LocalDateTime time) {
 

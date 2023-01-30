@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * A representation of a Schedule. Including all tasks. Owned by a user and set on a feeder
+ * @author roboter5123
+ */
 @Entity
 @Table(name = "Schedule")
 public class Schedule implements Serializable {
