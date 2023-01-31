@@ -1,12 +1,11 @@
 package com.roboter5123.feeder.model;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DispensationTest {
 
@@ -21,7 +20,7 @@ class DispensationTest {
         testObject.setDispensationId(5);
         wrongObject = new Dispensation(5, dateTime);
     }
-    
+
     @Test
     void compareTo() {
 

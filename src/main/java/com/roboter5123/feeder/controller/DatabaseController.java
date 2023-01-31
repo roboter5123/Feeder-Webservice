@@ -105,6 +105,11 @@ public class DatabaseController {
         return feederRepository.findBySchedule(schedule);
     }
 
+    public User findByLoginData(LoginData loginData){
+
+        return userRepository.findByEmail(loginData.getEmail());
+    }
+
     public void save(Schedule schedule) {
 
         scheduleRepository.save(schedule);

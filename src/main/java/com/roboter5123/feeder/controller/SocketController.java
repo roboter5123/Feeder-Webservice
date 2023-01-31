@@ -22,6 +22,10 @@ public class SocketController extends Thread {
     private final ServerSocket server;
     private final HashMap<UUID, FeederConnection> connections;
 
+    /**
+     * Basic constructor
+     * @param databaseController used to save and search for objects in the database
+     */
     @Autowired
     public SocketController(DatabaseController databaseController) {
 
@@ -77,6 +81,11 @@ public class SocketController extends Thread {
         }
     }
 
+    /**
+     * Used to look up a connecting feeder in the database. Creates a new one if there is none
+     * @param newConnection Only really used for it's uuid.
+     * @return Feeder from the database whose uuid matches with the connected one. A new feeder in case it doesn't exist
+     */
     private Feeder addConnection(FeederConnection newConnection) {
 
         Feeder feeder = databaseController.findByUuid(newConnection.getUuid());

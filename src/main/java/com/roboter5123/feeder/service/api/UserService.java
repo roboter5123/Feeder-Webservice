@@ -1,12 +1,13 @@
 package com.roboter5123.feeder.service.api;
 
 import com.roboter5123.feeder.controller.DatabaseController;
-import com.roboter5123.feeder.model.AccessToken;
-import com.roboter5123.feeder.model.User;
 import com.roboter5123.feeder.exception.BadRequestException;
 import com.roboter5123.feeder.exception.GoneException;
 import com.roboter5123.feeder.exception.InternalErrorException;
 import com.roboter5123.feeder.exception.UnauthorizedException;
+import com.roboter5123.feeder.model.AccessToken;
+import com.roboter5123.feeder.model.LoginData;
+import com.roboter5123.feeder.model.User;
 import com.roboter5123.feeder.util.EmailSender;
 import com.roboter5123.feeder.util.MakeAbstractRequest;
 import jakarta.mail.MessagingException;
@@ -45,17 +46,18 @@ public class UserService {
     }
 
     /**
-     * creates a accesstoken to authenticate and authorize a user with
-     * @param user must include email and password. Everything else is not needed. TODO: Maybe make a class just for this?
+     * creates an access token to authenticate and authorize a user with
+     * @param loginData must include email and password. Everything else is not needed.
      * @param response used to send back a cookie with the access token
-     * @return a access token the user can use to authenticate for using the api
+     * @return an access token the user can use to authenticate for using the api
      */
     @RequestMapping(value = "/api/access-token", method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public AccessToken createAccessToken(@RequestBody User user, HttpServletResponse response) {
+    public AccessToken createAccessToken(@RequestBody LoginData loginData, HttpServletResponse response) {
 
-        User databaseUser = databaseController.findByEmail(user.getEmail());
+        User user = loginData.toUser();
+        User databaseUser = databaseController.findByLoginData(loginData);
 
         if (databaseUser == null) {
 
@@ -106,8 +108,8 @@ public class UserService {
     }
 
     /**
-     * Generates and saves an accesstoken
-     * @return a new accesstoken that's saved in the database
+     * Generates and saves an access token
+     * @return a new access token that's saved in the database
      */
     public AccessToken generateAccessToken() {
 
@@ -172,14 +174,15 @@ public class UserService {
 
     /**
      * Used to register a user to the service
-     * @param user must include email and password. Everything else is not needed. TODO: Maybe make a class just for this?
+     * @param loginData must include email and password. Everything else is not needed.
      * @throws MessagingException thrown when the email address couldn't be delivered to
      */
     @RequestMapping(value = "/api/user", method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public void postUser(@RequestBody User user) throws MessagingException {
+    public void postUser(@RequestBody LoginData loginData) throws MessagingException {
 
+        User user = loginData.toUser();
         if (!MakeAbstractRequest.checkEmail(user.getEmail(), abstractAPIKey)) {
 
             throw new BadRequestException();
@@ -238,7 +241,7 @@ public class UserService {
 
     /**
      * used to check if an email is already registered to the service
-     * @param user onyly needs to include an email TODO: Maybe change this to just a string?
+     * @param user only needs to include an email
      * @return registration status of email
      */
     private boolean isEmailRegistered(User user) {
@@ -268,16 +271,16 @@ public class UserService {
 
     /**
      * Sends a password reset email to the user
-     * @param user must include email TODO: Maybe switch this out for a string as email
+     * @param loginData must include email
      * @return the user whose password was changed
      * @throws MessagingException thrown if the email isn't deliverable
      */
     @RequestMapping(value = "/api/user/resetPassword", method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    private User resetPassword(@RequestBody User user) throws MessagingException {
+    private User resetPassword(@RequestBody LoginData loginData) throws MessagingException {
 
-        user = databaseController.findByEmail(user.getEmail());
+        User user = databaseController.findByEmail(loginData.getEmail());
         user.setActivated(false);
         AccessToken accessToken = generateAccessToken();
         user.setAccessToken(accessToken);

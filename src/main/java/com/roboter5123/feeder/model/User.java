@@ -140,4 +140,9 @@ public class User implements Serializable {
                 ", feeders=" + feeders +
                 '}';
     }
+
+    public void setEmail(String email) {
+
+        this.email = email;
+    }
 }
