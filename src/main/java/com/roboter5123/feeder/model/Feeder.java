@@ -57,9 +57,20 @@ public class Feeder implements Serializable {
         return dispensations;
     }
 
-    public void addDispensation(Dispensation dispensation) {
+    public boolean addDispensation(Dispensation dispensation) {
+
+        if (this.dispensations == null){
+
+            dispensations = new ArrayList<>();
+        }
+
+        if (dispensations.contains(dispensation)){
+
+            return false;
+        }
 
         dispensations.add(dispensation);
+        return true;
     }
 
     public String getName() {
@@ -95,4 +106,8 @@ public class Feeder implements Serializable {
                 "\"}";
     }
 
+    public void setDispensations(List<Dispensation> dispensations) {
+
+        this.dispensations= dispensations;
+    }
 }

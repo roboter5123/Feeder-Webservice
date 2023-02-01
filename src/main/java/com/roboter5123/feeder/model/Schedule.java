@@ -44,6 +44,11 @@ public class Schedule implements Serializable {
             tasks = new ArrayList<>();
         }
 
+        if (task == null){
+
+            return;
+        }
+
         if (tasks.contains(task)) {
 
             throw new ConflictException();
@@ -86,6 +91,10 @@ public class Schedule implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setScheduleId(int scheduleId) {
+        this.scheduleId = scheduleId;
     }
 
     @Override

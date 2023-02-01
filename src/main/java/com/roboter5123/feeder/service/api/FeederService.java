@@ -58,7 +58,7 @@ public class FeederService {
 
         if (feeder == null) {
 
-            feeder = new Feeder();
+            feeder = new Feeder(uuid);
         }
 
         if (feeders.contains(feeder)) {

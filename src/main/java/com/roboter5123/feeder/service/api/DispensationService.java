@@ -40,7 +40,7 @@ public class DispensationService {
      */
     @RequestMapping(value = "/api/dispense", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public void dispense(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam int amount,
+    public Dispensation dispense(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam int amount,
                          @RequestParam UUID uuid) {
 
         User user = databaseController.findByAccessToken(accessToken);
@@ -56,10 +56,12 @@ public class DispensationService {
 
             throw new GoneException();
         }
+
         Dispensation dispensation = new Dispensation(amount, LocalDateTime.now());
         socketController.dispense(uuid, dispensation);
         feeder.addDispensation(dispensation);
         databaseController.save(dispensation);
+        return dispensation;
     }
 
     /**
@@ -69,18 +71,19 @@ public class DispensationService {
      */
     @RequestMapping(value = "/api/{uuid}/dispense", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public void piDispensed(@RequestParam int amount, @PathVariable UUID uuid) {
+    public Dispensation piDispensed(@RequestParam int amount, @PathVariable UUID uuid) {
 
         Feeder feeder = databaseController.findByUuid(uuid);
 
         if (feeder == null) {
 
-            return;
+            throw new GoneException();
         }
 
         Dispensation dispensation = new Dispensation(amount, LocalDateTime.now());
         feeder.addDispensation(dispensation);
         databaseController.save(dispensation);
+        return dispensation;
     }
 
     /**

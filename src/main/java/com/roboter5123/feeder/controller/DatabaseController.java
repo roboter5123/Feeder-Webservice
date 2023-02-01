@@ -61,7 +61,7 @@ public class DatabaseController {
         List<User> users = userRepository.findByFeeders_Uuid(feeder.getUuid());
         for (User user : users) {
 
-            user.setFeeder(feeder.getUuid(), null);
+            user.addFeeder(feeder.getUuid(), null);
             userRepository.save(user);
         }
         feederRepository.delete(feeder);

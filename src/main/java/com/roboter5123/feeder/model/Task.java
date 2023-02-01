@@ -55,27 +55,6 @@ public class Task implements Serializable, Comparable<Task> {
         return time;
     }
 
-    @Override
-    public boolean equals(Object o) {
-
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-
-        if (amount == task.amount && taskId == task.taskId && weekday == task.weekday && Objects.equals(time, task.time)) {
-
-            return true;
-
-        } else if (taskId == task.taskId && !(amount == task.amount && weekday == task.weekday && Objects.equals(time, task.time))) {
-
-            return true;
-
-        } else {
-
-            return (taskId != task.taskId && (amount == task.amount && weekday == task.weekday && Objects.equals(time, task.time)));
-        }
-    }
-
     public int getAmount() {
         return amount;
     }
@@ -89,8 +68,15 @@ public class Task implements Serializable, Comparable<Task> {
     }
 
     @Override
-    public int hashCode() {
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return amount == task.amount && taskId == task.taskId && weekday == task.weekday && Objects.equals(time, task.time);
+    }
 
+    @Override
+    public int hashCode() {
         return Objects.hash(weekday, amount, time, taskId);
     }
 

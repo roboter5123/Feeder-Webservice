@@ -65,9 +65,17 @@ public class User implements Serializable {
         return schedules;
     }
 
-    public void setFeeder(UUID uuid, Feeder feeder) {
+    public void addFeeder(UUID uuid, Feeder feeder) {
 
-        feeders.set(feeders.indexOf(new Feeder(uuid)), feeder);
+        if (feeders.contains(feeder)){
+
+            feeders.set(feeders.indexOf(new Feeder(uuid)), feeder);
+        }else{
+
+            feeders.add(feeder);
+        }
+
+
     }
 
     public AccessToken getAccessToken() {
