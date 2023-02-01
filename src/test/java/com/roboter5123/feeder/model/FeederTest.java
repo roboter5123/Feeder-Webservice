@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 class FeederTest {
@@ -59,7 +58,7 @@ class FeederTest {
     @Test
     void testEqualsWithEqualObject() {
 
-        assertEquals(comparisonObject, testObject);
+        assertEquals(testObject, comparisonObject);
     }
 
     @Test

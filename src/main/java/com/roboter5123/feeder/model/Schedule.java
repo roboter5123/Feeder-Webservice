@@ -37,6 +37,26 @@ public class Schedule implements Serializable {
         this.scheduleId = scheduleId;
     }
 
+    public int getScheduleId() {
+        return scheduleId;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setScheduleId(int scheduleId) {
+        this.scheduleId = scheduleId;
+    }
+
     public void addTask(Task task){
 
         if (tasks == null){
@@ -77,26 +97,6 @@ public class Schedule implements Serializable {
         return tasks.get(tasks.indexOf(task));
     }
 
-    public int getScheduleId() {
-        return scheduleId;
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setScheduleId(int scheduleId) {
-        this.scheduleId = scheduleId;
-    }
-
     @Override
     public boolean equals(Object o) {
 
@@ -107,6 +107,7 @@ public class Schedule implements Serializable {
         if (scheduleId == schedule.getScheduleId() && Objects.equals(name, schedule.getName())){
 
             return true;
+
         }else if(scheduleId == schedule.getScheduleId() && !Objects.equals(name, schedule.getName())){
 
             return true;
@@ -125,10 +126,8 @@ public class Schedule implements Serializable {
 
         return "{" +
                 "\"scheduleId\":" + scheduleId +
-                ", \"tasks\":" + tasks +
-                ", \"name\":\"" + name +
+                ",\"tasks\":" + tasks +
+                ",\"name\":\"" + name +
                 "\"}";
     }
-
-
 }

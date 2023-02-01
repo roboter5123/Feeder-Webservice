@@ -57,6 +57,11 @@ public class Feeder implements Serializable {
         return dispensations;
     }
 
+    public void setDispensations(List<Dispensation> dispensations) {
+
+        this.dispensations= dispensations;
+    }
+
     public boolean addDispensation(Dispensation dispensation) {
 
         if (this.dispensations == null){
@@ -104,10 +109,5 @@ public class Feeder implements Serializable {
                 "\", \"schedule\":" + schedule +
                 ", \"name\":\"" + name +
                 "\"}";
-    }
-
-    public void setDispensations(List<Dispensation> dispensations) {
-
-        this.dispensations= dispensations;
     }
 }

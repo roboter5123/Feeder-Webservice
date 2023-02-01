@@ -74,10 +74,52 @@ class ScheduleTest {
         assertEquals(mockTasks, testSchedule.getTasks());
     }
 
+    @Test
+    void equalsSameObject(){
+
+        assertEquals(testSchedule,testSchedule);
+    }
+
+    @Test
+    void equalsDifferentObject(){
+
+        Schedule compareSchedule = new Schedule(TEST_NAME);
+        compareSchedule.setScheduleId(TEST_ID);
+        assertEquals(compareSchedule, testSchedule);
+    }
+
+    @Test
+    void equalsWithDifferentScheduleId(){
+
+        Schedule compareSchedule = new Schedule(TEST_ID);
+        assertEquals(compareSchedule, testSchedule);
+    }
+    @Test
+    void equalsWithSameScheduleNameDifferentId(){
+
+        Schedule compareSchedule = new Schedule(TEST_NAME);
+        assertEquals(compareSchedule, testSchedule);
+    }
+
+    @Test
+    void equalsWithDifferentScheduleNameSameScheduleId(){
+
+        Schedule compareSchedule = new Schedule(TEST_ID);
+        assertEquals(compareSchedule, testSchedule);
+    }
+
+    @Test
+    void equalsWithDifferentSchedule(){
+
+        Schedule compareSchedule = new Schedule();
+        assertNotEquals(compareSchedule, testSchedule);
+    }
 
     @Test
     void testToString() {
 
-        fail("Not yet implemented");
+        String testString = "{\"scheduleId\":" + TEST_ID + ",\"tasks\":" + null +
+                ",\"name\":\"" + TEST_NAME + "\"}";
+        assertEquals(testString,testSchedule.toString());
     }
 }

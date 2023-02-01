@@ -1,6 +1,5 @@
 package com.roboter5123.feeder.model;
 
-import com.roboter5123.feeder.exception.GoneException;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -61,7 +60,7 @@ public class User{
 
         } catch (IndexOutOfBoundsException e) {
 
-            throw new GoneException();
+            return null;
         }
     }
 
@@ -79,8 +78,6 @@ public class User{
 
             feeders.add(feeder);
         }
-
-
     }
 
     public AccessToken getAccessToken() {

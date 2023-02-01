@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Used as a representation of a dispense action by the feeder
@@ -66,6 +67,19 @@ public class Dispensation implements Serializable, Comparable<Dispensation> {
 
             return 1;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dispensation that = (Dispensation) o;
+        return dispensationId == that.dispensationId && Objects.equals(time, that.time);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dispensationId, time);
     }
 
     @Override
