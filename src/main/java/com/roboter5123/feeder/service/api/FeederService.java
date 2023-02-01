@@ -20,6 +20,7 @@ import java.util.UUID;
 
 /**
  * Api used to manage feeder
+ *
  * @author roboter5123
  */
 @RestController
@@ -37,11 +38,12 @@ public class FeederService {
 
     /**
      * Used to register a feeder to a user. The feeder must exist in the database prior. Thus, the feeder has to be connected first
+     *
      * @param accessToken used to authenticate a user and add the feeder to them
-     * @param uuid used to find the feeder in the database
+     * @param uuid        used to find the feeder in the database
      * @return a list of all feeders registered to the user
      */
-    @RequestMapping(value = "/api/feeder", method = RequestMethod.POST)
+    @PostMapping(value = "/api/feeder")
     @ResponseStatus(HttpStatus.OK)
     public List<Feeder> registerFeeder(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam UUID uuid) {
 
@@ -76,14 +78,15 @@ public class FeederService {
 
     /**
      * @param accessToken used to authenticate a user
-     * @param uuid used to find the uuid
+     * @param uuid        used to find the uuid
      * @return the feeder that was looked for
      * @throws UnauthorizedException thrown when the token isn't valid
-     * @throws GoneException thrown when the feeder doesn't exist or the user doesn't own it
+     * @throws GoneException         thrown when the feeder doesn't exist or the user doesn't own it
      */
-    @RequestMapping(value = "/api/feeder", method = RequestMethod.GET)
+    @GetMapping(value = "/api/feeder")
     @ResponseStatus(HttpStatus.OK)
-    public Feeder getFeeder(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam UUID uuid) throws UnauthorizedException, GoneException {
+    public Feeder getFeeder(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam UUID uuid)
+            throws UnauthorizedException, GoneException {
 
         User user = databaseController.findByAccessToken(accessToken);
 
@@ -104,10 +107,11 @@ public class FeederService {
 
     /**
      * Gets all feeders that are registered to the user
+     *
      * @param accessToken used to authenticate a user
      * @return all feeders that are registered to the given user
      */
-    @RequestMapping(value = "/api/feeders", method = RequestMethod.GET)
+    @GetMapping(value = "/api/feeders")
     @ResponseStatus(HttpStatus.OK)
     public List<Feeder> getFeeders(@CookieValue(name = "access-token") AccessToken accessToken) {
 
@@ -130,12 +134,13 @@ public class FeederService {
 
     /**
      * Removes a feeder from the given user. and deletes the feeder if it's orphaned
+     *
      * @param accessToken used to authenticate a user
-     * @param uuid used to find the feeder
+     * @param uuid        used to find the feeder
      */
-    @RequestMapping(value = "/api/feeder", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/api/feeder")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteFeeders(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam UUID uuid) {
+    public void deleteFeeder(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam UUID uuid) {
 
         User user = databaseController.findByAccessToken(accessToken);
 
@@ -164,13 +169,14 @@ public class FeederService {
 
     /**
      * Updates a feeder with the given parameters
-     * @param accessToken used to authenticate a user
-     * @param uuid used to find the feeder
-     * @param feederName Optional the new name the feeder should have
+     *
+     * @param accessToken  used to authenticate a user
+     * @param uuid         used to find the feeder
+     * @param feederName   Optional the new name the feeder should have
      * @param scheduleName Optional the name of the new schedule
      * @return the feeder that was changed
      */
-    @RequestMapping(value = "/api/feeder", method = RequestMethod.PUT)
+    @PutMapping(value = "/api/feeder")
     @ResponseStatus(HttpStatus.OK)
     public Feeder changeFeeder(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam UUID
             uuid, @RequestParam(required = false) String feederName, @RequestParam(required = false) String scheduleName) {
@@ -191,7 +197,7 @@ public class FeederService {
 
         if (feeder == null) {
 
-            throw new UnauthorizedException();
+            throw new GoneException();
         }
 
         if (feederName != null) {
@@ -209,11 +215,7 @@ public class FeederService {
                 throw new BadRequestException();
             }
 
-            if (oldSchedule == null) {
-
-                feeder.setSchedule(newSchedule);
-
-            } else if (!Objects.equals(oldSchedule.getName(), newSchedule.getName())) {
+            if (oldSchedule == null || !Objects.equals(oldSchedule.getName(), newSchedule.getName())) {
 
                 feeder.setSchedule(newSchedule);
             }

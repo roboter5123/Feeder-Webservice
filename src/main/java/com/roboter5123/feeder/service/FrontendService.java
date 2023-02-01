@@ -17,7 +17,8 @@ import java.util.*;
  */
 @Controller
 public class FrontendService {
-    DatabaseController databaseController;
+    private final DatabaseController databaseController;
+    private static final String LOGIN_REDIRECT = "redirect:/login";
 
     @Autowired
     public FrontendService(DatabaseController databaseController) {
@@ -33,23 +34,23 @@ public class FrontendService {
             return "redirect:/dashboard";
         } else {
 
-            return "redirect:/login";
+            return LOGIN_REDIRECT;
         }
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @GetMapping(value = "/login")
     public String getLogin() {
 
         return "login";
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @GetMapping(value = "/register")
     public String getRegister() {
 
         return "register";
     }
 
-    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    @GetMapping(value = "/dashboard")
     public String getDashboard(@CookieValue(name = "access-token", required = false) AccessToken accessToken, Model model) {
 
         if (accessToken != null && databaseController.findByAccessToken(accessToken) != null) {
@@ -60,7 +61,7 @@ public class FrontendService {
 
         } else {
 
-            return "redirect:/login";
+            return LOGIN_REDIRECT;
         }
     }
 
@@ -95,7 +96,7 @@ public class FrontendService {
 
         } else {
 
-            return "redirect:/login";
+            return LOGIN_REDIRECT;
         }
     }
 
@@ -129,7 +130,7 @@ public class FrontendService {
 
         } else {
 
-            return "redirect:/login";
+            return LOGIN_REDIRECT;
         }
     }
 
@@ -141,7 +142,7 @@ public class FrontendService {
 
         if (user == null || user.getActivated()) {
 
-            return "redirect:/login";
+            return LOGIN_REDIRECT;
 
         } else {
 
@@ -162,7 +163,7 @@ public class FrontendService {
 
         if (user == null || user.getActivated()) {
 
-            return "redirect:/login";
+            return LOGIN_REDIRECT;
         } else {
 
             model.addAttribute("token", token.getToken());

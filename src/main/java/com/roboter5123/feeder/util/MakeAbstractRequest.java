@@ -12,6 +12,10 @@ import java.io.IOException;
  */
 public class MakeAbstractRequest {
 
+    private MakeAbstractRequest() {
+        throw new IllegalStateException();
+    }
+
     public static boolean checkEmail(String email, String apiKey) {
 
         try {

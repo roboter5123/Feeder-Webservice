@@ -2,10 +2,13 @@ package com.roboter5123.feeder.service.api;
 
 import com.roboter5123.feeder.controller.DatabaseController;
 import com.roboter5123.feeder.controller.SocketController;
+import com.roboter5123.feeder.exception.BadRequestException;
 import com.roboter5123.feeder.exception.ConflictException;
+import com.roboter5123.feeder.exception.GoneException;
 import com.roboter5123.feeder.exception.UnauthorizedException;
 import com.roboter5123.feeder.model.AccessToken;
 import com.roboter5123.feeder.model.Feeder;
+import com.roboter5123.feeder.model.Schedule;
 import com.roboter5123.feeder.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,6 +39,8 @@ class FeederServiceTest {
     User user;
     AccessToken accessToken;
     UUID uuid;
+    Schedule newSchedule;
+    Schedule oldSchedule;
 
     @BeforeEach
     void setUp(){
@@ -45,12 +51,15 @@ class FeederServiceTest {
         feeder = new Feeder(uuid);
         user = new User();
         user.setFeeders(new ArrayList<>());
-
-
+        newSchedule = new Schedule("newSchedule");
+        oldSchedule = new Schedule("oldSchedule");
+        user.addSchedule(newSchedule);
+        user.addSchedule(oldSchedule);
     }
 
     @Test
     void registerFeederWorking() {
+
         when(databaseController.findByUuid(uuid)).thenReturn(feeder);
         when(databaseController.findByAccessToken(accessToken)).thenReturn(user);
         feederService.registerFeeder(accessToken, uuid);
@@ -58,7 +67,7 @@ class FeederServiceTest {
     }
 
     @Test
-    void registerFeederAccesstokenInvalid() {
+    void registerFeederAccessTokenInvalid() {
 
         when(databaseController.findByAccessToken(accessToken)).thenReturn(null);
         Exception exception = assertThrows(UnauthorizedException.class,()->feederService.registerFeeder(accessToken, uuid));
@@ -87,36 +96,154 @@ class FeederServiceTest {
     @Test
     void getFeederWorking() {
 
-//        fail("Not yet implemented");
+        user.addFeeder(uuid, feeder);
+        when(databaseController.findByAccessToken(accessToken)).thenReturn(user);
+        Feeder serviceFeeder = feederService.getFeeder(accessToken,uuid);
+        assertEquals(feeder, serviceFeeder, "Get feeder doesn't get the correct feeder");
     }
 
     @Test
     void getFeederUserDoesntExist() {
 
-//        fail("Not yet implemented");
+        Exception exception = assertThrows(UnauthorizedException.class, ()->feederService.getFeeder(accessToken,uuid));
+        assertInstanceOf(UnauthorizedException.class, exception);
     }
 
     @Test
-    void getFeederuserDoesntOwn() {
+    void getFeederUserDoesntOwn() {
 
-//        fail("Not yet implemented");
+        when(databaseController.findByAccessToken(accessToken)).thenReturn(user);
+        Exception exception = assertThrows(GoneException.class, ()->feederService.getFeeder(accessToken,uuid));
+        assertInstanceOf(GoneException.class, exception);
     }
 
     @Test
-    void getFeeders() {
+    void getFeedersWorking() {
 
-//        fail("Not yet implemented");
+        Feeder feeder1 = new Feeder(UUID.randomUUID());
+        user.addFeeder(feeder1.getUuid(), feeder1);
+        user.addFeeder(uuid, feeder);
+        when(databaseController.findByAccessToken(accessToken)).thenReturn(user);
+        List<Feeder> serviceFeeders = feederService.getFeeders(accessToken);
+        assertEquals(user.getFeeders(), serviceFeeders);
     }
 
     @Test
-    void deleteFeeders() {
+    void getFeedersUserDoesntExist() {
 
-//        fail("Not yet implemented");
+        Exception exception = assertThrows(UnauthorizedException.class, ()->feederService.getFeeders(accessToken));
+        assertInstanceOf(UnauthorizedException.class, exception);
     }
 
     @Test
-    void changeFeeder() {
+    void getFeederUserDoesntOwnAnyFeeders() {
 
-//        fail("Not yet implemented");
+        when(databaseController.findByAccessToken(accessToken)).thenReturn(user);
+        Exception exception = assertThrows(GoneException.class, ()->feederService.getFeeder(accessToken,uuid));
+        assertInstanceOf(GoneException.class, exception);
+    }
+
+    @Test
+    void deleteFeedersWorkingWith2FeedersInUserInitially() {
+
+        Feeder feeder1 = new Feeder(UUID.randomUUID());
+        List<Feeder> feeders = new ArrayList<>();
+        feeders.add(feeder1);
+        user.addFeeder(feeder1.getUuid(), feeder1);
+        user.addFeeder(uuid, feeder);
+        when(databaseController.findByAccessToken(accessToken)).thenReturn(user);
+        feederService.deleteFeeder(accessToken, uuid);
+        assertEquals(feeders, user.getFeeders());
+    }
+    @Test
+    void deleteFeedersWorkingWith1FeedersInUserInitially() {
+
+        List<Feeder> feeders = new ArrayList<>();
+        user.addFeeder(uuid, feeder);
+        when(databaseController.findByAccessToken(accessToken)).thenReturn(user);
+        feederService.deleteFeeder(accessToken,uuid);
+        assertEquals(feeders, user.getFeeders());
+    }
+
+    @Test
+    void deleteFeedersUserDoesntExist() {
+
+        Exception exception = assertThrows(UnauthorizedException.class, ()->feederService.deleteFeeder(accessToken, uuid));
+        assertInstanceOf(UnauthorizedException.class, exception);
+    }
+
+    @Test
+    void getFeederUserDoesntOwnTheFeeder() {
+
+        when(databaseController.findByAccessToken(accessToken)).thenReturn(user);
+        Exception exception = assertThrows(GoneException.class, ()->feederService.deleteFeeder(accessToken, uuid));
+        assertInstanceOf(GoneException.class, exception);
+    }
+
+    @Test
+    void changeFeederOnlyNameInputWorking(){
+
+        when(databaseController.findByAccessToken(accessToken)).thenReturn(user);
+        feeder.setName("oldName");
+        user.addFeeder(uuid, feeder);
+        Feeder serviceFeeder = feederService.changeFeeder(accessToken,uuid,"newFeederName",null);
+        assertEquals("newFeederName", serviceFeeder.getName());
+    }
+
+    @Test
+    void changeFeederOnlyScheduleInputWorking(){
+
+        when(databaseController.findByScheduleName("newSchedule")).thenReturn(newSchedule);
+        when(databaseController.findByAccessToken(accessToken)).thenReturn(user);
+        user.addFeeder(uuid, feeder);
+        Feeder serviceFeeder = feederService.changeFeeder(accessToken,uuid,null,"newSchedule");
+        assertEquals(feeder, serviceFeeder);
+        assertEquals(newSchedule, serviceFeeder.getSchedule());
+    }
+
+    @Test
+    void changeFeederScheduleAndNameWorking(){
+
+        when(databaseController.findByScheduleName("newSchedule")).thenReturn(newSchedule);
+        when(databaseController.findByAccessToken(accessToken)).thenReturn(user);
+
+        feeder.setName("oldName");
+        user.addFeeder(uuid, feeder);
+        Feeder serviceFeeder = feederService.changeFeeder(accessToken,uuid,"newFeederName","newSchedule");
+        assertEquals(feeder, serviceFeeder);
+        assertEquals("newFeederName", feeder.getName());
+        assertEquals(newSchedule, serviceFeeder.getSchedule());
+
+    }
+
+    @Test
+    void changeFeederNoNameAndNoSchedule() {
+
+        Exception exception  = assertThrows(BadRequestException.class, ()-> feederService.changeFeeder(accessToken,uuid, null,null));
+        assertInstanceOf(BadRequestException.class, exception);
+    }
+
+    @Test
+    void changeFeederUserDoesntExist() {
+
+        Exception exception  = assertThrows(UnauthorizedException.class, ()-> feederService.changeFeeder(accessToken,uuid, "null","null"));
+        assertInstanceOf(UnauthorizedException.class, exception);
+    }
+
+    @Test
+    void changeFeederUserDoesntOwnFeeder() {
+
+        when(databaseController.findByAccessToken(accessToken)).thenReturn(user);
+        Exception exception  = assertThrows(GoneException.class, ()-> feederService.changeFeeder(accessToken,uuid, "null","null"));
+        assertInstanceOf(GoneException.class, exception);
+    }
+
+    @Test
+    void changeFeederUserDoesntOwnSchedule() {
+
+        user.addFeeder(uuid,feeder);
+        when(databaseController.findByAccessToken(accessToken)).thenReturn(user);
+        Exception exception  = assertThrows(BadRequestException.class, ()-> feederService.changeFeeder(accessToken,uuid, "null","null"));
+        assertInstanceOf(BadRequestException.class, exception);
     }
 }

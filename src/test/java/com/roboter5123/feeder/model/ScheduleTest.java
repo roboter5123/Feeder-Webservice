@@ -77,5 +77,7 @@ class ScheduleTest {
 
     @Test
     void testToString() {
+
+        fail("Not yet implemented");
     }
 }

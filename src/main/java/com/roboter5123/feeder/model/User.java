@@ -3,7 +3,7 @@ package com.roboter5123.feeder.model;
 import com.roboter5123.feeder.exception.GoneException;
 import jakarta.persistence.*;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +14,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "user")
-public class User implements Serializable {
+public class User{
 
     @Id
     private String email;
@@ -32,6 +32,11 @@ public class User implements Serializable {
     private List<Schedule> schedules;
 
     public void addSchedule(Schedule schedule) {
+
+        if (schedules == null){
+
+            schedules = new ArrayList<>();
+        }
 
         schedules.add(schedule);
     }

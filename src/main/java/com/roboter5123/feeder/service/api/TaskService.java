@@ -37,7 +37,7 @@ public class TaskService {
      * @param task the task to create and put into the schedule
      * @return the schedule with the new task
      */
-    @RequestMapping(value = "/api/task", method = RequestMethod.POST)
+    @PostMapping(value = "/api/task")
     @ResponseStatus(HttpStatus.OK)
     public Schedule createTask(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam String
             scheduleName, @RequestBody Task task) {
@@ -88,7 +88,7 @@ public class TaskService {
      * @param task the task to delete from the schedule
      * @return the schedule without the given task
      */
-    @RequestMapping(value = "/api/task", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/api/task")
     @ResponseStatus(HttpStatus.OK)
     public Schedule deleteTask(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam String
             scheduleName, @RequestBody Task task) {
@@ -138,7 +138,7 @@ public class TaskService {
      * @param amount which should be dispensed
      * @return schedule the task is a child of
      */
-    @RequestMapping(value = "/api/task", method = RequestMethod.PUT)
+    @PutMapping(value = "/api/task")
     @ResponseStatus(HttpStatus.OK)
     public Schedule changeTask(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam String
             scheduleName,

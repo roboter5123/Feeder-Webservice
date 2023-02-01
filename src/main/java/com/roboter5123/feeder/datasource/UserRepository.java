@@ -11,7 +11,7 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, CrudRepository<User, Long> {
 
-    List<User> findByFeeders_Uuid(UUID uuid);
+    List<User> findByFeedersUuid(UUID uuid);
 
     User findByAccessToken(AccessToken accessToken);
 

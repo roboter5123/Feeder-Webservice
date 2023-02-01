@@ -38,7 +38,7 @@ public class DispensationService {
      * @param amount The amount of food to dispense
      * @param uuid used to find the feeder
      */
-    @RequestMapping(value = "/api/dispense", method = RequestMethod.POST)
+    @PostMapping(value = "/api/dispense")
     @ResponseStatus(HttpStatus.OK)
     public Dispensation dispense(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam int amount,
                          @RequestParam UUID uuid) {
@@ -69,7 +69,7 @@ public class DispensationService {
      * @param amount the amount of food dispensed
      * @param uuid used to find the feeder that dispensed
      */
-    @RequestMapping(value = "/api/{uuid}/dispense", method = RequestMethod.POST)
+    @PostMapping(value = "/api/{uuid}/dispense")
     @ResponseStatus(HttpStatus.OK)
     public Dispensation piDispensed(@RequestParam int amount, @PathVariable UUID uuid) {
 
@@ -92,7 +92,7 @@ public class DispensationService {
      * @param uuid used to find the feeder whose dispensations to get
      * @return a list of all dispensations the feeder has done in its lifetime
      */
-    @RequestMapping(value = "/api/dispense", method = RequestMethod.GET)
+    @GetMapping(value = "/api/dispense")
     @ResponseStatus(HttpStatus.OK)
     public List<Dispensation> getDispenses(@CookieValue(name = "access-token") AccessToken
                                                accessToken, @RequestParam UUID uuid) {

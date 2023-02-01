@@ -23,6 +23,7 @@ public class Task implements Serializable, Comparable<Task> {
     private int taskId;
 
     public Task() {
+//        This is a default constructor please leave me alone sonarlint
 
     }
     public boolean isInvalid() {
@@ -103,15 +104,17 @@ public class Task implements Serializable, Comparable<Task> {
 
             return 1;
 
-        }if (this.time == null && task.time == null){
+        }else if (this.time == null && task.time == null){
 
             return 0;
 
         } else if (this.time != null && task.time == null) {
 
             return -1;
-        }
 
-        return this.time.compareTo(task.time);
+        }else{
+
+            return this.time.compareTo(task.time);
+        }
     }
 }

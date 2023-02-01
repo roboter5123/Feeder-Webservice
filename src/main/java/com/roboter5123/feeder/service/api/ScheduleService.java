@@ -39,7 +39,7 @@ public class ScheduleService {
      * @param name the for the schedule to be created
      * @return a list of all schedules the user owns
      */
-    @RequestMapping(value = "/api/schedule", method = RequestMethod.POST)
+    @PostMapping(value = "/api/schedule")
     @ResponseStatus(HttpStatus.OK)
     public List<Schedule> createSchedule(@CookieValue(name = "access-token") AccessToken
                                                  accessToken, @RequestParam String name) {
@@ -87,7 +87,7 @@ public class ScheduleService {
      * @param name the name of the schedule to get
      * @return the schedule that was searched or
      */
-    @RequestMapping(value = "/api/schedule", method = RequestMethod.GET)
+    @GetMapping(value = "/api/schedule")
     @ResponseStatus(HttpStatus.OK)
     public Schedule retrieveSchedule(@CookieValue(name = "access-token") AccessToken
                                              accessToken, @RequestParam String name) {
@@ -114,7 +114,7 @@ public class ScheduleService {
      * @param accessToken used to authenticate a user
      * @return a list of all schedules a user owns
      */
-    @RequestMapping(value = "/api/schedules", method = RequestMethod.GET)
+    @GetMapping(value = "/api/schedules")
     @ResponseStatus(HttpStatus.OK)
     public List<Schedule> retrieveSchedules(@CookieValue(name = "access-token") AccessToken accessToken) {
 
@@ -133,7 +133,7 @@ public class ScheduleService {
      * @param accessToken used to authenticate the user
      * @param name the name of the schedule the user wants to delete
      */
-    @RequestMapping(value = "/api/schedule", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/api/schedule")
     @ResponseStatus(HttpStatus.OK)
     public void deleteSchedule(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam String
             name) {
@@ -167,7 +167,7 @@ public class ScheduleService {
      * @param newName the name to change sche schedules name to
      * @return the schedule that was changed
      */
-    @RequestMapping(value = "/api/schedule", method = RequestMethod.PUT)
+    @PutMapping(value = "/api/schedule")
     @ResponseStatus(HttpStatus.OK)
     public Schedule changeSchedule(@CookieValue(name = "access-token") AccessToken accessToken, @RequestParam String
             oldName, @RequestParam String newName) {

@@ -51,7 +51,7 @@ public class UserService {
      * @param response used to send back a cookie with the access token
      * @return an access token the user can use to authenticate for using the api
      */
-    @RequestMapping(value = "/api/access-token", method = RequestMethod.POST)
+    @PostMapping(value = "/api/access-token")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public AccessToken createAccessToken(@RequestBody LoginData loginData, HttpServletResponse response) {
@@ -129,7 +129,7 @@ public class UserService {
      * @param accessToken the access token to find
      * @return the access token that was found
      */
-    @RequestMapping(value = "/api/access-token", method = RequestMethod.GET)
+    @GetMapping(value = "/api/access-token")
     @ResponseStatus(HttpStatus.OK)
     public AccessToken retrieveAccessToken(@CookieValue(name = "access-token") AccessToken accessToken) {
 
@@ -154,7 +154,7 @@ public class UserService {
      * @param accessToken the access token to delete
      * @param response used to update the users cookie with an expired one
      */
-    @RequestMapping(value = "/api/access-token", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/api/access-token")
     @ResponseStatus(HttpStatus.OK)
     public void deleteAccessToken(@CookieValue(name = "access-token") AccessToken accessToken, HttpServletResponse response) {
 
@@ -177,7 +177,7 @@ public class UserService {
      * @param loginData must include email and password. Everything else is not needed.
      * @throws MessagingException thrown when the email address couldn't be delivered to
      */
-    @RequestMapping(value = "/api/user", method = RequestMethod.POST)
+    @PostMapping(value = "/api/user")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public void postUser(@RequestBody LoginData loginData) throws MessagingException {
@@ -253,10 +253,11 @@ public class UserService {
      * I don't know what this was used for or how it was supposed to verify the user
      * @deprecated
      */
-    @RequestMapping(value = "/api/user/verify", method = RequestMethod.PUT)
+    @PutMapping(value = "/api/user/verify")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    private User verifyUser(@RequestParam AccessToken token) throws MessagingException {
+    @Deprecated(since = "idk")
+    public User verifyUser(@RequestParam AccessToken token) throws MessagingException {
 
         User user = databaseController.findByAccessToken(token);
         user.setActivated(true);
@@ -275,10 +276,10 @@ public class UserService {
      * @return the user whose password was changed
      * @throws MessagingException thrown if the email isn't deliverable
      */
-    @RequestMapping(value = "/api/user/resetPassword", method = RequestMethod.POST)
+    @PostMapping(value = "/api/user/resetPassword")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    private User resetPassword(@RequestBody LoginData loginData) throws MessagingException {
+    public User resetPassword(@RequestBody LoginData loginData) throws MessagingException {
 
         User user = databaseController.findByEmail(loginData.getEmail());
         user.setActivated(false);
@@ -296,10 +297,10 @@ public class UserService {
      * @return the user which has been changed
      * @throws NoSuchAlgorithmException Never really thrown but has to be declared
      */
-    @RequestMapping(value = "/api/user/resetPassword", method = RequestMethod.PUT)
+    @PutMapping(value = "/api/user/resetPassword")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    private User resetPassword(@RequestParam AccessToken token, @RequestBody String password) throws NoSuchAlgorithmException {
+    public User resetPassword(@RequestParam AccessToken token, @RequestBody String password) throws NoSuchAlgorithmException {
 
         User user = databaseController.findByAccessToken(token);
         password = password.strip();

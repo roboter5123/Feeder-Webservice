@@ -48,11 +48,11 @@ public class SocketController extends Thread {
     /**
      * Main Method starts the socket server for accepting connections and manages them.
      */
+    @Override
     public void run(){
 
-        boolean running = true;
 
-        while (running) {
+        while (true) {
 
             FeederConnection newConnection;
 
@@ -98,6 +98,7 @@ public class SocketController extends Thread {
         }
 
         this.connections.put(newConnection.getUuid(), newConnection);
+//        TODO: REPLACE WITH LOGGER
         System.out.println("connected with " + newConnection.getUuid().toString());
         return feeder;
     }
@@ -124,7 +125,7 @@ public class SocketController extends Thread {
             String message = "dispense#" + dispensation.getAmount();
             sendMessage(uuid, message);
 
-        } catch (IOException | NullPointerException e) {
+        } catch (NullPointerException e) {
 
             throw new GoneException();
         }
@@ -134,10 +135,9 @@ public class SocketController extends Thread {
      * Sends an arbitrary message to the feeder specified.
      * @param uuid Used to find the feeder in the connection hashmap
      * @param message Should include a command and args. Seperated by #. Example: "set#" + feeder.toString()
-     * @throws IOException Thrown when the feeders connection is lost during sending
      * @throws NullPointerException thrown if the feeder hasn't connected yet.
      */
-    private void sendMessage(UUID uuid, String message) throws IOException, NullPointerException {
+    private void sendMessage(UUID uuid, String message) throws NullPointerException {
 
         FeederConnection connection = this.getConnection(uuid);
 
@@ -157,13 +157,9 @@ public class SocketController extends Thread {
     public void updateFeeder(UUID uuid, Feeder feeder){
 
         String message = "set#" + feeder.toString();
-        try {
-            sendMessage(uuid, message);
 
-        } catch (IOException e) {
+        sendMessage(uuid, message);
 
-            throw new RuntimeException(e);
-        }
     }
 }
 

@@ -58,12 +58,14 @@ public class DatabaseController {
 
     public void delete(Feeder feeder) {
 
-        List<User> users = userRepository.findByFeeders_Uuid(feeder.getUuid());
+        List<User> users = userRepository.findByFeedersUuid(feeder.getUuid());
+
         for (User user : users) {
 
             user.addFeeder(feeder.getUuid(), null);
             userRepository.save(user);
         }
+
         feederRepository.delete(feeder);
     }
 
@@ -146,6 +148,6 @@ public class DatabaseController {
 
     public List<User> findUsersByFeeder(Feeder feeder) {
 
-        return userRepository.findByFeeders_Uuid(feeder.getUuid());
+        return userRepository.findByFeedersUuid(feeder.getUuid());
     }
 }
