@@ -102,6 +102,8 @@ public class UserService {
 
         Cookie cookie = new Cookie("access-token", accessToken.getToken());
         cookie.setMaxAge(24 * 60 * 60);
+        cookie.setPath("/");
+        cookie.setHttpOnly(false);
         response.addCookie(cookie);
 
         return accessToken;
