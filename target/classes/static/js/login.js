@@ -29,13 +29,12 @@ $(document).ready(function () {
 
     function failedLogin() {
 
+        $(".fullScreen").remove()
         if ($("#failedLoginText").length) {
-
             return
         }
         let element = $("<p id ='failedLoginText'>Failed to login.<br>Please try again.</p>")
         $("#login").append(element)
-        $(".fullScreen").remove()
     }
 
     function login(data) {
